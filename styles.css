@@ -1,0 +1,36 @@
+/* Runtime styles loaded by index.html. The main stylesheet is style.css; this file keeps the existing styles.css reference working. */
+@import url("style.css");
+
+.daily-news {
+  width: min(1120px, calc(100% - 48px));
+  margin: 18px auto 0;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid rgba(255,255,255,.28);
+  border-radius: 16px;
+  background: rgba(24,51,52,.22);
+  color: #fff;
+  box-shadow: 0 12px 28px rgba(24,51,52,.12);
+}
+.daily-news-badge {
+  flex: 0 0 auto;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #f4b629;
+  color: #183334;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.daily-news strong { font-size: 15px; }
+.daily-news time { margin-left: auto; color: #ffe8b0; font-size: 13px; white-space: nowrap; }
+.event-list time[data-live-date] { min-width: 64px; }
+.event-list time[data-live-date] b,
+.event-list time[data-live-date] span { display: block; }
+@media (max-width: 760px) {
+  .daily-news { width: min(100% - 36px, 1120px); align-items: flex-start; flex-wrap: wrap; }
+  .daily-news time { width: 100%; margin-left: 0; }
+}
