@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Generate a random joke from an external API.">
+  <title>Random Joke Generator | Ganesh Utsav</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="jokes.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav container" aria-label="Main navigation">
+      <a class="logo" href="index.html"><span>ॐ</span> Ganesh Utsav</a>
+      <a class="nav-button" href="index.html">Back to home <span>←</span></a>
+    </nav>
+  </header>
+
+  <main class="joke-page">
+    <section class="joke-card" aria-labelledby="joke-title">
+      <p class="kicker orange">A little joy for today</p>
+      <h1 id="joke-title">Random Joke Generator</h1>
+      <p class="joke-intro">Need a quick smile? Fetch a family-friendly joke from the JokeAPI.</p>
+      <div class="joke-box" aria-live="polite" aria-atomic="true">
+        <p id="joke-loading" class="joke-status">Click the button to load a joke.</p>
+        <p id="joke-setup" class="joke-setup"></p>
+        <p id="joke-delivery" class="joke-delivery"></p>
+      </div>
+      <div class="joke-actions">
+        <button class="button button-coral" id="new-joke" type="button">Tell me a joke <span>↗</span></button>
+        <button class="button button-light" id="copy-joke" type="button" disabled>Copy joke</button>
+      </div>
+      <p class="joke-error" id="joke-error" role="alert"></p>
+      <p class="joke-source">Powered by <a href="https://jokeapi.dev/" target="_blank" rel="noopener noreferrer">JokeAPI</a>.</p>
+    </section>
+  </main>
+  <script src="jokes.js"></script>
+</body>
+</html>
