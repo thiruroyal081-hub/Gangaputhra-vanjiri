@@ -1,36 +1,1112 @@
-/* Runtime styles loaded by index.html. The main stylesheet is style.css; this file keeps the existing styles.css reference working. */
-@import url("style.css");
+/* ================================
+   SRI GANAPATHI SEVA SAMITHI
+   OLD WEBSITE STYLE
+================================ */
 
-.daily-news {
-  width: min(1120px, calc(100% - 48px));
-  margin: 18px auto 0;
-  padding: 14px 18px;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #fffaf3;
+  color: #1e293b;
+  line-height: 1.6;
+}
+
+img {
+  width: 100%;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.container {
+  width: min(1120px, 90%);
+  margin: auto;
+}
+
+
+/* ================================
+   TOP BAR
+================================ */
+
+.topbar {
+  background: #7c2d12;
+  color: #ffffff;
+  font-size: 14px;
+  padding: 8px 0;
+}
+
+.topbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+/* ================================
+   HEADER
+================================ */
+
+.header {
+  background: rgba(255, 255, 255, 0.97);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid #f1e4d6;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.nav-container {
+  min-height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f97316, #b91c1c);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  box-shadow: 0 8px 20px rgba(249, 115, 22, 0.25);
+}
+
+.logo strong {
+  display: block;
+  color: #7c2d12;
+  font-size: 17px;
+}
+
+.logo small {
+  display: block;
+  color: #64748b;
+  font-size: 12px;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+nav a {
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  color: #ea580c;
+}
+
+.nav-donate {
+  background: #ea580c;
+  color: white !important;
+  padding: 10px 18px;
+  border-radius: 50px;
+}
+
+.nav-donate:hover {
+  background: #c2410c;
+}
+
+.menu-toggle {
+  display: none;
+  border: none;
+  background: #fff1e6;
+  color: #9a3412;
+  font-size: 24px;
+  padding: 7px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+
+/* ================================
+   HERO
+================================ */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(251, 191, 36, 0.22), transparent 30%),
+    linear-gradient(135deg, #7c2d12 0%, #9a3412 48%, #ea580c 100%);
+  color: white;
+  padding: 90px 0;
+}
+
+.hero::before {
+  content: "ॐ";
+  position: absolute;
+  right: -50px;
+  bottom: -170px;
+  font-size: 430px;
+  color: rgba(255, 255, 255, 0.035);
+  font-family: serif;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  gap: 70px;
+  position: relative;
+  z-index: 2;
+}
+
+.badge {
+  display: inline-block;
+  padding: 8px 15px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 22px;
+}
+
+.hero h1 {
+  font-size: clamp(45px, 6vw, 75px);
+  line-height: 1;
+  letter-spacing: -2px;
+  margin-bottom: 18px;
+}
+
+.hero h1 span {
+  color: #fde68a;
+}
+
+.hero-telugu {
+  color: #fed7aa;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+
+.hero-text {
+  max-width: 600px;
+  color: #ffedd5;
+  font-size: 17px;
+  margin-bottom: 30px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 13px 22px;
+  border-radius: 50px;
+  font-weight: 700;
+  transition: 0.3s;
+}
+
+.btn-primary {
+  background: #fbbf24;
+  color: #431407;
+}
+
+.btn-primary:hover {
+  background: #fde68a;
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: white;
+}
+
+.btn-outline:hover {
+  background: white;
+  color: #9a3412;
+}
+
+.hero-image {
+  position: relative;
+}
+
+.image-frame {
+  position: relative;
+  padding: 10px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.13);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.3);
+}
+
+.image-frame img {
+  width: 100%;
+  height: 480px;
+  object-fit: cover;
+  border-radius: 22px;
+}
+
+.floating-card {
+  position: absolute;
+  bottom: -25px;
+  left: -35px;
+  background: white;
+  color: #7c2d12;
+  padding: 16px 25px;
+  border-radius: 15px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.floating-card strong,
+.floating-card span {
+  display: block;
+}
+
+.floating-card span {
+  font-size: 13px;
+  color: #64748b;
+}
+
+
+/* ================================
+   FEATURES
+================================ */
+
+.features {
+  background: white;
+  padding: 35px 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+}
+
+.feature {
   display: flex;
   align-items: center;
   gap: 14px;
-  border: 1px solid rgba(255,255,255,.28);
-  border-radius: 16px;
-  background: rgba(24,51,52,.22);
-  color: #fff;
-  box-shadow: 0 12px 28px rgba(24,51,52,.12);
 }
-.daily-news-badge {
-  flex: 0 0 auto;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: #f4b629;
-  color: #183334;
-  font-size: 11px;
+
+.feature-icon {
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  background: #fff7ed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+}
+
+.feature h3 {
+  font-size: 15px;
+  color: #7c2d12;
+}
+
+.feature p {
+  font-size: 12px;
+  color: #64748b;
+}
+
+
+/* ================================
+   SECTIONS
+================================ */
+
+.section {
+  padding: 90px 0;
+}
+
+.section-heading {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 50px;
+}
+
+.section-heading span {
+  color: #ea580c;
+  font-size: 12px;
   font-weight: 800;
-  letter-spacing: .08em;
-  text-transform: uppercase;
+  letter-spacing: 2px;
 }
-.daily-news strong { font-size: 15px; }
-.daily-news time { margin-left: auto; color: #ffe8b0; font-size: 13px; white-space: nowrap; }
-.event-list time[data-live-date] { min-width: 64px; }
-.event-list time[data-live-date] b,
-.event-list time[data-live-date] span { display: block; }
-@media (max-width: 760px) {
-  .daily-news { width: min(100% - 36px, 1120px); align-items: flex-start; flex-wrap: wrap; }
-  .daily-news time { width: 100%; margin-left: 0; }
+
+.section-heading h2 {
+  color: #431407;
+  font-size: clamp(32px, 4vw, 46px);
+  line-height: 1.15;
+  margin: 10px 0 15px;
+}
+
+.section-heading p {
+  color: #64748b;
+}
+
+.section-heading.light h2,
+.section-heading.light p {
+  color: white;
+}
+
+.section-heading.light span {
+  color: #fde68a;
+}
+
+
+/* ================================
+   ABOUT
+================================ */
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.about-image img {
+  height: 500px;
+  object-fit: cover;
+  border-radius: 25px;
+  box-shadow: 0 25px 50px rgba(124, 45, 18, 0.15);
+}
+
+.about-content h3 {
+  font-size: 30px;
+  color: #7c2d12;
+  margin-bottom: 20px;
+}
+
+.about-content p {
+  color: #64748b;
+  margin-bottom: 15px;
+}
+
+.check-list {
+  list-style: none;
+  margin-top: 25px;
+}
+
+.check-list li {
+  padding: 11px 0;
+  border-bottom: 1px solid #f1e4d6;
+  color: #334155;
+  font-weight: 600;
+}
+
+
+/* ================================
+   TEMPLE
+================================ */
+
+.dark-section {
+  background:
+    radial-gradient(circle at top right, rgba(249, 115, 22, 0.18), transparent 35%),
+    #431407;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.info-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 35px;
+  border-radius: 20px;
+  color: white;
+  transition: 0.3s;
+}
+
+.info-card:hover {
+  transform: translateY(-7px);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.card-icon {
+  font-size: 35px;
+  margin-bottom: 18px;
+}
+
+.info-card h3 {
+  color: #fde68a;
+  margin-bottom: 12px;
+}
+
+.info-card p {
+  color: #fed7aa;
+  font-size: 14px;
+}
+
+
+/* ================================
+   FESTIVAL
+================================ */
+
+.festival-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.festival-card {
+  position: relative;
+  background: white;
+  border-radius: 18px;
+  padding: 30px;
+  border: 1px solid #ffedd5;
+  box-shadow: 0 10px 30px rgba(124, 45, 18, 0.07);
+  overflow: hidden;
+}
+
+.festival-card > span {
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  font-size: 60px;
+  font-weight: 800;
+  color: #fff1e6;
+}
+
+.festival-card h3 {
+  position: relative;
+  color: #9a3412;
+  margin-bottom: 10px;
+}
+
+.festival-card p {
+  position: relative;
+  color: #64748b;
+  font-size: 14px;
+}
+
+
+/* ================================
+   GALLERY
+================================ */
+
+.gallery-section {
+  background: #fff7ed;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  grid-template-rows: 260px 260px;
+  gap: 15px;
+}
+
+.gallery-item {
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.gallery-item:first-child {
+  grid-row: 1 / 3;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.5s;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.05);
+}
+
+
+/* ================================
+   UPDATES
+================================ */
+
+.updates-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.update-card {
+  display: flex;
+  gap: 18px;
+  background: white;
+  border: 1px solid #f1e4d6;
+  border-radius: 18px;
+  padding: 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+.update-icon {
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: #fff7ed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.update-card small {
+  color: #ea580c;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.update-card h3 {
+  color: #7c2d12;
+  margin: 4px 0 8px;
+}
+
+.update-card p {
+  color: #64748b;
+  font-size: 13px;
+}
+
+
+/* ================================
+   DONATION
+================================ */
+
+.donation-section {
+  padding: 90px 0;
+  background:
+    radial-gradient(circle at 80% 50%, rgba(251, 191, 36, 0.25), transparent 30%),
+    linear-gradient(135deg, #7c2d12, #c2410c);
+  color: white;
+}
+
+.donation-grid {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 70px;
+  align-items: center;
+}
+
+.donation-label {
+  font-size: 12px;
+  font-weight: 800;
+  color: #fde68a;
+  letter-spacing: 2px;
+}
+
+.donation-content h2 {
+  font-size: clamp(36px, 5vw, 55px);
+  line-height: 1.1;
+  margin: 12px 0 20px;
+}
+
+.donation-content > p {
+  color: #ffedd5;
+  max-width: 600px;
+}
+
+.upi-box {
+  margin-top: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 18px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.upi-box span {
+  font-size: 11px;
+  color: #fed7aa;
+}
+
+.upi-box strong {
+  font-size: 17px;
+  flex: 1;
+}
+
+.upi-box button {
+  border: none;
+  background: #fbbf24;
+  color: #431407;
+  font-weight: 700;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.copy-message {
+  color: #fde68a !important;
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+.donation-card {
+  background: white;
+  color: #334155;
+  text-align: center;
+  border-radius: 25px;
+  padding: 40px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+}
+
+.donation-icon {
+  width: 70px;
+  height: 70px;
+  background: #fff7ed;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 35px;
+}
+
+.donation-card h3 {
+  color: #7c2d12;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.donation-card p {
+  color: #64748b;
+}
+
+.upi-large {
+  display: block;
+  color: #ea580c;
+  font-size: 19px;
+  margin: 20px 0;
+}
+
+.payment-note {
+  background: #fff7ed;
+  color: #9a3412;
+  font-size: 12px;
+  padding: 12px;
+  border-radius: 10px;
+}
+
+
+/* ================================
+   CONTACT
+================================ */
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.contact-card {
+  text-align: center;
+  background: white;
+  border: 1px solid #f1e4d6;
+  padding: 35px 20px;
+  border-radius: 20px;
+  transition: 0.3s;
+}
+
+.contact-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(124, 45, 18, 0.1);
+}
+
+.contact-icon {
+  font-size: 35px;
+  margin-bottom: 15px;
+}
+
+.contact-card h3 {
+  color: #7c2d12;
+}
+
+.contact-card p {
+  color: #64748b;
+  margin: 8px 0 12px;
+}
+
+.contact-card a {
+  color: #ea580c;
+  font-weight: 700;
+}
+
+
+/* ================================
+   FINAL CTA
+================================ */
+
+.final-cta {
+  padding: 80px 0;
+  background: #fff7ed;
+  text-align: center;
+}
+
+.cta-content > span {
+  display: block;
+  font-size: 50px;
+  margin-bottom: 10px;
+}
+
+.cta-content h2 {
+  color: #7c2d12;
+  font-size: 38px;
+}
+
+.cta-content p {
+  color: #64748b;
+  margin: 10px 0 25px;
+}
+
+
+/* ================================
+   FOOTER
+================================ */
+
+.footer {
+  background: #2b1008;
+  color: #fed7aa;
+  padding: 60px 0 0;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 50px;
+  padding-bottom: 45px;
+}
+
+.footer-logo {
+  color: white;
+  font-weight: 800;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.footer h4 {
+  color: #fde68a;
+  margin-bottom: 12px;
+}
+
+.footer a {
+  display: block;
+  color: #fed7aa;
+  font-size: 13px;
+  margin: 7px 0;
+}
+
+.footer a:hover {
+  color: white;
+}
+
+.footer-bottom {
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 18px;
+  font-size: 12px;
+}
+
+
+/* ================================
+   WHATSAPP FLOATING BUTTON
+================================ */
+
+.whatsapp-float {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #25d366;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 27px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  z-index: 999;
+  transition: 0.3s;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.08);
+}
+
+
+/* ================================
+   TABLET
+================================ */
+
+@media (max-width: 900px) {
+
+  .menu-toggle {
+    display: block;
+  }
+
+  nav {
+    position: absolute;
+    top: 78px;
+    left: 0;
+    right: 0;
+    background: white;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 20px 5%;
+    gap: 0;
+    border-top: 1px solid #f1e4d6;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+
+    display: none;
+  }
+
+  nav.active {
+    display: flex;
+  }
+
+  nav a {
+    padding: 12px 5px;
+    border-bottom: 1px solid #f8ede4;
+  }
+
+  .nav-donate {
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .hero-grid,
+  .about-grid,
+  .donation-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-grid {
+    gap: 50px;
+  }
+
+  .hero-image {
+    max-width: 600px;
+  }
+
+  .features-grid,
+  .festival-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cards-grid,
+  .updates-grid,
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .donation-grid {
+    gap: 40px;
+  }
+
+  .donation-card {
+    max-width: 500px;
+  }
+
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 600px) {
+
+  .container {
+    width: 92%;
+  }
+
+  .topbar .container {
+    justify-content: center;
+  }
+
+  .topbar .container span:last-child {
+    display: none;
+  }
+
+  .nav-container {
+    min-height: 70px;
+  }
+
+  nav {
+    top: 70px;
+  }
+
+  .logo strong {
+    font-size: 14px;
+  }
+
+  .logo small {
+    font-size: 10px;
+  }
+
+  .logo-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .hero {
+    padding: 65px 0 80px;
+  }
+
+  .hero h1 {
+    font-size: 46px;
+  }
+
+  .hero-telugu {
+    font-size: 18px;
+  }
+
+  .hero-text {
+    font-size: 15px;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+  }
+
+  .hero-buttons .btn {
+    width: 100%;
+  }
+
+  .image-frame img {
+    height: 380px;
+  }
+
+  .floating-card {
+    left: 15px;
+    bottom: -25px;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 10px;
+  }
+
+  .feature {
+    align-items: flex-start;
+  }
+
+  .feature-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 19px;
+  }
+
+  .section {
+    padding: 65px 0;
+  }
+
+  .section-heading {
+    margin-bottom: 35px;
+  }
+
+  .about-image img {
+    height: 350px;
+  }
+
+  .cards-grid,
+  .festival-grid,
+  .updates-grid,
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 230px 180px 180px;
+  }
+
+  .gallery-item:first-child {
+    grid-column: 1 / 3;
+    grid-row: auto;
+  }
+
+  .donation-section {
+    padding: 65px 0;
+  }
+
+  .donation-card {
+    padding: 30px 20px;
+  }
+
+  .upi-box {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .upi-box button {
+    width: 100%;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .cta-content h2 {
+    font-size: 30px;
+  }
+
+}
+
+
+/* ================================
+   VERY SMALL MOBILE
+================================ */
+
+@media (max-width: 400px) {
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 220px);
+  }
+
+  .gallery-item:first-child {
+    grid-column: auto;
+  }
+
+  .hero h1 {
+    font-size: 40px;
+  }
+
 }
