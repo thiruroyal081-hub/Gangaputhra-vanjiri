@@ -1,138 +1,826 @@
- (cd "$(git rev-parse --show-toplevel)" && printf '%s' 'diff --git a/index.html b/index.html
-new file mode 100644
-index 0000000000000000000000000000000000000000..374063c871b403882981279deb968af7cd7ef722
---- /dev/null
-+++ b/index.html
-@@ -0,0 +1,131 @@
-+<!doctype html>
-+<html lang="en">
-+<head>
-+  <meta charset="UTF-8">
-+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-+  <meta name="description" content="The village Ganesh Utsav celebration plan, events, and memory wall.">
-+  <title>Ganesh Utsav | Our Village, Our Memories</title>
-+  <link rel="stylesheet" href="styles.css">
-+</head>
-+<body>
-+  <header class="site-header">
-+    <nav class="nav container" aria-label="Main navigation">
-+      <a class="logo" href="#home" aria-label="Ganesh Utsav home"><span>ॐ</span> Ganesh Utsav</a>
-+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-menu">Menu</button>
-+      <div class="nav-links" id="main-menu">
-+        <a href="#plan">Plan</a><a href="#temple">🛕 Temple</a><a href="#donations">Donations</a><a href="#memories">Memories</a><a href="#participate">Participate</a>
-+        <a class="nav-button" href="#participate">Join the Utsav <span>→</span></a>
-+      </div>
-+    </nav>
-+  </header>
-+
-+  <main id="home">
-+    <section class="hero">
-+      <div class="hero-shape shape-one" aria-hidden="true"></div><div class="hero-shape shape-two" aria-hidden="true"></div>
-+      <div class="container hero-layout">
-+        <div class="hero-copy">
-+          <p class="kicker">Ganesh Chaturthi · 07–17 September</p>
-+          <h1>Our village.<br>Our <em>Ganpati.</em></h1>
-+          <p class="lead">Ten days of devotion, music, food, laughter, and the kind of togetherness that turns into a lifetime of memories.</p>
-+          <div class="hero-actions"><a class="button button-cream" href="#plan">See our celebration plan <span>↓</span></a><a class="quiet-link" href="#memories">Our memory wall <span>↗</span></a></div>
-+        </div>
-+        <div class="ganpati-art" aria-label="Decorative Ganesh Utsav artwork">
-+          <div class="arch"></div><div class="rays"></div><div class="ganpati-symbol">ॐ</div><div class="marigold left-flower">✿</div><div class="marigold right-flower">✿</div><p>Ganpati Bappa<br><strong>Morya</strong></p>
-+        </div>
-+      </div>
-+      <div class="countdown container" aria-label="Countdown to opening aarti">
-+        <p>Opening aarti begins in</p><div class="clock"><div><strong id="days">09</strong><span>Days</span></div><i></i><div><strong id="hours">14</strong><span>Hours</span></div><i></i><div><strong id="minutes">32</strong><span>Minutes</span></div></div>
-+      </div>
-+    </section>
-+
-+    <section class="welcome container">
-+      <p class="kicker orange">A festival made by all of us</p>
-+      <div class="intro-row"><h2>Come for the darshan.<br><em>Stay for the feeling.</em></h2><p>From the first aarti to the final visarjan, every lane of our village has a place in this celebration. Bring your family, your neighbours, and your brightest smile.</p></div>
-+      <div class="values">
-+        <article><span class="value-icon yellow">✦</span><h3>Pray together</h3><p>Morning and evening aarti, bhajans, and blessings for every home.</p></article>
-+        <article><span class="value-icon coral">♫</span><h3>Celebrate together</h3><p>Folk music, children’s performances, rangoli, and shared meals.</p></article>
-+        <article><span class="value-icon green">♥</span><h3>Remember together</h3><p>Capture each little joy for a memory wall our village can keep forever.</p></article>
-+      </div>
-+    </section>
-+
-+    <section class="plan-section" id="plan">
-+      <div class="container plan-grid">
-+        <div class="plan-heading"><p class="kicker cream">Our celebration plan</p><h2>Ten golden days.<br><em>One big family.</em></h2><p>Save these special moments and join as many as you can. Everyone is welcome.</p><a class="button button-dark" href="#participate">Volunteer with us <span>→</span></a></div>
-+        <div class="event-list">
-+          <article><time datetime="2026-09-07"><b>07</b><span>SEP</span></time><div><p>Sunday · 6:30 PM</p><h3>Ganesh Sthapana</h3><span>Welcome procession and first aarti</span></div><strong>01</strong></article>
-+          <article><time datetime="2026-09-10"><b>10</b><span>SEP</span></time><div><p>Wednesday · 7:00 PM</p><h3>Village Folk Night</h3><span>Music, dance, and community dinner</span></div><strong>02</strong></article>
-+          <article><time datetime="2026-09-14"><b>14</b><span>SEP</span></time><div><p>Sunday · 5:30 PM</p><h3>Little Stars Evening</h3><span>Children’s performances and games</span></div><strong>03</strong></article>
-+          <article><time datetime="2026-09-17"><b>17</b><span>SEP</span></time><div><p>Wednesday · 4:00 PM</p><h3>Visarjan Yatra</h3><span>Farewell procession by the river</span></div><strong>04</strong></article>
-+        </div>
-+      </div>
-+    </section>
-+
-+    <section class="donations container" id="donations">
-+      <div class="section-title donation-heading">
-+        <div><p class="kicker orange">Transparent contribution record</p><h2>Every gift has a<br><em>place in our story.</em></h2></div>
-+        <p>Record donations, retain previous entries, and keep a clear account of how our community comes together.</p>
-+      </div>
-+      <div class="donation-summary" aria-label="Donation summary">
-+        <article><span>Total received</span><strong id="total-donations">₹0</strong><small>All recorded contributions</small></article>
-+        <article><span>Donations recorded</span><strong id="donation-count">0</strong><small>Previous and new entries</small></article>
-+        <article><span>Latest contribution</span><strong id="latest-donation">—</strong><small id="latest-date">No donation recorded yet</small></article>
-+      </div>
-+      <div class="donation-layout">
-+        <form class="donation-form" id="donation-form">
-+          <h3>Add a donation record</h3>
-+          <p>Use this for cash, UPI, or bank-transfer donations already received.</p>
-+          <label for="donor-name">Donor name</label><input id="donor-name" name="donorName" required placeholder="e.g. Suresh Kumar">
-+          <div class="form-row"><div><label for="donation-amount">Amount (₹)</label><input id="donation-amount" name="amount" required min="1" step="1" type="number" placeholder="1000"></div><div><label for="donation-date">Date received</label><input id="donation-date" name="date" required type="date"></div></div>
-+          <label for="donation-purpose">Purpose</label><select id="donation-purpose" name="purpose"><option>Festival fund</option><option>Prasad</option><option>Decoration</option><option>Annadanam</option><option>Visarjan</option></select>
-+          <label for="donation-reference">Payment reference (optional)</label><input id="donation-reference" name="reference" placeholder="UPI ID, receipt, or cash note">
-+          <button class="button button-coral" type="submit">Save donation <span>→</span></button><p class="form-message" id="donation-message" role="status" aria-live="polite"></p>
-+        </form>
-+        <div class="ledger"><div class="ledger-top"><div><p class="kicker orange">Previous donation records</p><h3>Community contribution ledger</h3></div><button class="export-button" id="export-donations" type="button">Download CSV <span>↓</span></button></div><div class="table-wrap"><table><thead><tr><th>Date</th><th>Donor</th><th>Purpose</th><th>Reference</th><th class="amount">Amount</th></tr></thead><tbody id="donation-records"></tbody></table></div><p class="ledger-note">Records are saved on this browser. Download the CSV regularly to keep a permanent village record.</p></div>
-+      </div>
-+    </section>
-+
-+    <section class="temple-section" id="temple">
-+      <div class="container">
-+        <div class="temple-hero"><div><p class="kicker cream">🛕 Sri Ganapathi Temple · శ్రీ గణపతి దేవాలయం</p><h2>Temple care, held with<br><em>trust and devotion.</em></h2><p>Our permanent temple record keeps every verified contribution transparent, respectful, and safe for future generations.</p></div><div class="temple-mark" aria-hidden="true">ॐ</div></div>
-+        <nav class="temple-nav" aria-label="Temple navigation"><a href="#temple-history">Temple History<br><span>దేవాలయ చరిత్ర</span></a><a href="#pooja-schedule">Pooja Schedule<br><span>పూజా కార్యక్రమాలు</span></a><a class="active" href="#temple-donations">Temple Donations<br><span>ఆలయ విరాళాలు</span></a><a href="#donation-receipt">Donation Receipt<br><span>విరాళ రసీదు</span></a><a href="#annual-reports">Annual Reports<br><span>వార్షిక నివేదికలు</span></a></nav>
-+
-+        <div class="temple-info-grid"><article id="temple-history"><span>01</span><h3>Temple History<br><em>దేవాలయ చరిత్ర</em></h3><p>Record the stories, service, and blessings that make our temple a home for the village.</p></article><article id="pooja-schedule"><span>02</span><h3>Pooja Schedule<br><em>పూజా కార్యక్రమాలు</em></h3><p>Daily aarti, special poojas, and festival timings can be shared here with every family.</p></article></div>
-+
-+        <section class="temple-donations" id="temple-donations">
-+          <div class="section-title"><div><p class="kicker orange">Permanent donation management · శాశ్వత విరాళాల నిర్వహణ</p><h2>Temple donations,<br><em>clearly accounted.</em></h2></div><p>Only verified donations are included in the public temple ledger. Payment references are always masked for privacy.</p></div>
-+          <div class="temple-dashboard" aria-label="Temple donation dashboard"><article><span>Total Donations</span><strong id="temple-total">₹0</strong><small>Verified records</small></article><article><span>Number of Donations</span><strong id="temple-count">0</strong><small>All records</small></article><article><span>This Month</span><strong id="temple-month">₹0</strong><small>Verified donations</small></article><article><span>This Year</span><strong id="temple-year">₹0</strong><small>Verified donations</small></article><article><span>Pending</span><strong id="temple-pending">0</strong><small>Needs verification</small></article><article><span>Verified</span><strong id="temple-verified">0</strong><small>Ready for receipt</small></article></div>
-+
-+          <div class="temple-admin-layout">
-+            <form class="temple-form" id="temple-donation-form"><div class="admin-label">Admin entry · నిర్వాహక నమోదు</div><h3>Add temple donation</h3><p>Use this protected workflow to enter a received contribution. New donations begin as pending.</p><label for="temple-donor">Donor name</label><input id="temple-donor" name="donorName" required placeholder="Donor name"><div class="form-row"><div><label for="temple-amount">Amount (₹)</label><input id="temple-amount" name="amount" required min="1" type="number" placeholder="1000"></div><div><label for="temple-date">Date</label><input id="temple-date" name="date" required type="date"></div></div><div class="form-row"><div><label for="temple-time">Time</label><input id="temple-time" name="time" required type="time"></div><div><label for="temple-method">Payment method</label><select id="temple-method" name="paymentMethod"><option>UPI</option><option>Cash</option><option>Bank transfer</option><option>Cheque</option></select></div></div><label for="temple-purpose">Purpose</label><select id="temple-purpose" name="purpose"><option>General temple fund</option><option>Daily pooja</option><option>Annadanam</option><option>Temple renovation</option><option>Festival seva</option></select><label for="temple-transaction">UPI transaction ID / reference</label><input id="temple-transaction" name="transactionId" required placeholder="Stored safely; masked in all public views"><label for="temple-notes">Notes (admin only)</label><textarea id="temple-notes" name="notes" rows="3" placeholder="Optional internal note"></textarea><button class="button button-coral" type="submit">Add pending donation <span>→</span></button><p class="form-message" id="temple-form-message" role="status" aria-live="polite"></p></form>
-+            <div class="temple-ledger"><div class="ledger-top"><div><p class="kicker orange">Admin donation records</p><h3>Verify &amp; manage donations</h3></div><button class="export-button" id="export-temple-donations" type="button">Download CSV <span>↓</span></button></div><div class="admin-tools"><label for="temple-search" class="sr-only">Search donations</label><input id="temple-search" type="search" placeholder="Search receipt, donor, date, or transaction ID"><label for="temple-year-filter" class="sr-only">Filter by year</label><select id="temple-year-filter"><option value="all">All years</option></select></div><div class="table-wrap"><table><thead><tr><th>Receipt</th><th>Donor / date</th><th>Purpose</th><th>Payment</th><th>Status</th><th class="amount">Amount</th><th>Action</th></tr></thead><tbody id="temple-admin-records"></tbody></table></div></div>
-+          </div>
-+
-+          <div class="public-ledger"><div class="ledger-top"><div><p class="kicker orange">Public record · ప్రజా రికార్డు</p><h3>Verified temple donations</h3></div><span class="privacy-badge">🔒 Private payment details are masked</span></div><div class="table-wrap"><table><thead><tr><th>Receipt Number</th><th>Donor Name</th><th>Purpose</th><th>Date &amp; time</th><th>Payment</th><th>Masked transaction ID</th><th>Status</th><th class="amount">Amount</th></tr></thead><tbody id="temple-public-records"></tbody></table></div></div>
-+
-+          <section class="annual-reports" id="annual-reports"><div><p class="kicker orange">Donation history · విరాళాల చరిత్ర</p><h3>Annual records</h3></div><div class="year-cards" id="temple-year-cards"></div><div class="monthly-report"><h3>Monthly donation totals</h3><div id="monthly-totals" class="monthly-totals"></div></div></section>
-+        </section>
-+      </div>
-+    </section>
-+
-+    <dialog class="receipt-dialog" id="donation-receipt"><div class="receipt" id="receipt-content"><button class="dialog-close" id="close-receipt" type="button" aria-label="Close receipt">×</button><p class="receipt-temple">SRI GANAPATHI TEMPLE<br><span>శ్రీ గణపతి దేవాలయం</span></p><div class="receipt-rule"></div><p class="receipt-title">DONATION PAYMENT RECEIPT</p><div class="receipt-details" id="receipt-details"></div><div class="receipt-rule"></div><p class="receipt-thanks">Thank you for your generous contribution<br><strong>గణపతి బప్పా మోరియా 🙏</strong></p></div><div class="receipt-actions"><button class="button button-coral" id="print-receipt" type="button">Print Receipt <span>⎙</span></button><button class="button button-cream" id="save-receipt" type="button">Save as PDF <span>↓</span></button></div></dialog>
-+
-+    <section class="memories container" id="memories">
-+      <div class="section-title"><div><p class="kicker orange">Made of small moments</p><h2>Memories to keep<br><em>close to home.</em></h2></div><p>Photographs may fade, but the feeling stays. Share your favourite Utsav moment on our village memory wall.</p></div>
-+      <div class="memory-grid">
-+        <article class="memory-card prayer"><span>01</span><h3>Hands folded,<br>hearts full.</h3></article>
-+        <article class="memory-card joy"><span>02</span><h3>Joy in every<br>colour.</h3></article>
-+        <article class="memory-card home"><span>03</span><h3>Home is where<br>we gather.</h3></article>
-+      </div>
-+    </section>
-+
-+    <section class="participate" id="participate">
-+      <div class="participate-pattern" aria-hidden="true">✦ ✽ ✦ ✽ ✦</div>
-+      <div class="container participate-grid"><div><p class="kicker cream">There is a place for you</p><h2>Let’s make it<br><em>unforgettable.</em></h2><p>Volunteer, perform, bring prasad, help decorate, or simply join us. Every helping hand makes our Ganpati brighter.</p></div>
-+        <form id="join-form" class="join-form"><label for="name">Your name</label><input id="name" name="name" type="text" required placeholder="Enter your name"><label for="help">I would like to</label><select id="help" name="help"><option>Volunteer for the celebration</option><option>Perform on stage</option><option>Bring prasad</option><option>Share a memory</option></select><button class="button button-cream" type="submit">Count me in <span>→</span></button><p class="form-message" id="form-message" role="status" aria-live="polite"></p></form>
-+      </div>
-+    </section>
-+  </main>
-+  <footer class="footer container"><a class="logo" href="#home"><span>ॐ</span> Ganesh Utsav</a><p>Made with devotion by our village community.</p><p>Ganpati Bappa Morya <b>✦</b></p></footer>
-+  <script src="script.js"></script>
-+</body>
-+</html>
-' | git apply --3way)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description"
+        content="Sri Ganapathi Seva Samithi - Vanjiri, Telangana. Temple information, Ganesh Utsav, donations and community activities.">
+
+  <title>Sri Ganapathi Seva Samithi | Vanjiri</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ================= TOP BAR ================= -->
+<div class="topbar">
+  <div class="container">
+    <span>🙏 శ్రీ గణపతి సేవా సమితి</span>
+    <span>Vanjiri, Telangana</span>
+  </div>
+</div>
+
+
+<!-- ================= HEADER ================= -->
+<header class="header">
+  <div class="container nav-container">
+
+    <a href="#home" class="logo">
+      <span class="logo-icon">ॐ</span>
+      <div>
+        <strong>Sri Ganapathi Seva Samithi</strong>
+        <small>శ్రీ గణపతి సేవా సమితి</small>
+      </div>
+    </a>
+
+    <button class="menu-toggle" onclick="toggleMenu()">
+      ☰
+    </button>
+
+    <nav id="mainNav">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#temple">Temple</a>
+      <a href="#utsavam">Utsavam</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#updates">Updates</a>
+      <a href="#contact">Contact</a>
+      <a href="#donate" class="nav-donate">Donate</a>
+    </nav>
+
+  </div>
+</header>
+
+
+<!-- ================= HERO ================= -->
+<section id="home" class="hero">
+
+  <div class="container hero-grid">
+
+    <div class="hero-content">
+
+      <span class="badge">
+        🛕 OUR VILLAGE • OUR TEMPLE • OUR COMMUNITY
+      </span>
+
+      <h1>
+        Sri Ganapathi<br>
+        <span>Seva Samithi</span>
+      </h1>
+
+      <p class="hero-telugu">
+        శ్రీ గణపతి సేవా సమితి
+      </p>
+
+      <p class="hero-text">
+        A spiritual and community platform dedicated to
+        Lord Ganapathi, temple development and village unity.
+      </p>
+
+      <div class="hero-buttons">
+        <a href="#temple" class="btn btn-primary">
+          🛕 Visit Temple
+        </a>
+
+        <a href="#donate" class="btn btn-outline">
+          🙏 Support Us
+        </a>
+      </div>
+
+    </div>
+
+
+    <div class="hero-image">
+
+      <div class="image-frame">
+
+        <img
+          src="ganapathi-idol.jpg"
+          alt="Sri Ganapathi Idol"
+          onerror="this.onerror=null;this.src='ganesh.jpeg';"
+        >
+
+      </div>
+
+      <div class="floating-card">
+        <strong>🙏 Ganapathi Bappa</strong>
+        <span>Morya</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= FEATURES ================= -->
+<section class="features">
+
+  <div class="container features-grid">
+
+    <div class="feature">
+      <div class="feature-icon">🛕</div>
+      <div>
+        <h3>Permanent Temple</h3>
+        <p>Devotion for generations</p>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">🙏</div>
+      <div>
+        <h3>Daily Pooja</h3>
+        <p>Prayer and blessings</p>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">🤝</div>
+      <div>
+        <h3>Community</h3>
+        <p>United village families</p>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">❤️</div>
+      <div>
+        <h3>Seva</h3>
+        <p>Service with devotion</p>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+<section id="about" class="section">
+
+  <div class="container">
+
+    <div class="section-heading">
+      <span>ABOUT US</span>
+      <h2>Serving the community with devotion</h2>
+      <p>
+        మా గ్రామ దేవాలయం మరియు సమాజ సేవ కోసం కలిసి పనిచేస్తున్న
+        భక్తుల సమితి.
+      </p>
+    </div>
+
+
+    <div class="about-grid">
+
+      <div class="about-image">
+
+        <img
+          src="community.jpg"
+          alt="Village Community"
+          onerror="this.onerror=null;this.src='ganesh.jpeg';"
+        >
+
+      </div>
+
+
+      <div class="about-content">
+
+        <h3>
+          Sri Ganapathi Seva Samithi
+        </h3>
+
+        <p>
+          Sri Ganapathi Seva Samithi is a community initiative
+          dedicated to Lord Ganapathi and the development of our
+          village temple.
+        </p>
+
+        <p>
+          Through the support and contributions of villagers,
+          devotees and well-wishers, we aim to maintain the temple,
+          organize festivals and encourage community participation.
+        </p>
+
+        <ul class="check-list">
+          <li>🙏 Temple development</li>
+          <li>🪔 Regular pooja and celebrations</li>
+          <li>🤝 Community service</li>
+          <li>🌸 Ganesh Utsav celebrations</li>
+          <li>❤️ Support for village activities</li>
+        </ul>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= TEMPLE ================= -->
+<section id="temple" class="section dark-section">
+
+  <div class="container">
+
+    <div class="section-heading light">
+
+      <span>OUR TEMPLE</span>
+
+      <h2>
+        Sri Ganapathi Temple
+      </h2>
+
+      <p>
+        శ్రీ గణపతి దేవాలయం
+      </p>
+
+    </div>
+
+
+    <div class="cards-grid">
+
+      <div class="info-card">
+
+        <div class="card-icon">🛕</div>
+
+        <h3>Permanent Temple</h3>
+
+        <p>
+          Our aim is to maintain and develop a permanent
+          temple for the spiritual needs of our village.
+        </p>
+
+      </div>
+
+
+      <div class="info-card">
+
+        <div class="card-icon">🪔</div>
+
+        <h3>Daily Pooja</h3>
+
+        <p>
+          Devotees can participate in regular pooja,
+          aarti and special religious programs.
+        </p>
+
+      </div>
+
+
+      <div class="info-card">
+
+        <div class="card-icon">🌺</div>
+
+        <h3>Festival Celebrations</h3>
+
+        <p>
+          Ganesh Chaturthi and other important occasions
+          are celebrated together by the community.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= UTSAVAM ================= -->
+<section id="utsavam" class="section">
+
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span>GANESH UTSAVAM</span>
+
+      <h2>
+        Ganapathi Bappa Morya
+      </h2>
+
+      <p>
+        భక్తి, ఆనందం మరియు ఐక్యతతో గణేష్ ఉత్సవం
+      </p>
+
+    </div>
+
+
+    <div class="festival-grid">
+
+      <div class="festival-card">
+        <span>01</span>
+        <h3>Ganapathi Sthapana</h3>
+        <p>
+          Welcoming Lord Ganapathi with devotion and prayers.
+        </p>
+      </div>
+
+
+      <div class="festival-card">
+        <span>02</span>
+        <h3>Daily Pooja</h3>
+        <p>
+          Morning and evening aarti with devotees.
+        </p>
+      </div>
+
+
+      <div class="festival-card">
+        <span>03</span>
+        <h3>Community Programs</h3>
+        <p>
+          Cultural programs and activities for families
+          and children.
+        </p>
+      </div>
+
+
+      <div class="festival-card">
+        <span>04</span>
+        <h3>Visarjan</h3>
+        <p>
+          Final procession and farewell to Lord Ganapathi.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= GALLERY ================= -->
+<section id="gallery" class="section gallery-section">
+
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span>GALLERY</span>
+
+      <h2>
+        Memories of our community
+      </h2>
+
+      <p>
+        Moments from our temple and village celebrations.
+      </p>
+
+    </div>
+
+
+    <div class="gallery-grid">
+
+      <div class="gallery-item">
+        <img
+          src="ganapathi-idol.jpg"
+          alt="Ganapathi Idol"
+          onerror="this.onerror=null;this.src='ganesh.jpeg';"
+        >
+      </div>
+
+
+      <div class="gallery-item">
+        <img
+          src="community.jpg"
+          alt="Village Community"
+          onerror="this.onerror=null;this.src='ganesh.jpeg';"
+        >
+      </div>
+
+
+      <div class="gallery-item">
+        <img
+          src="ganesh.jpeg"
+          alt="Lord Ganesh"
+        >
+      </div>
+
+
+      <div class="gallery-item">
+        <img
+          src="ganapathi-idol.jpg"
+          alt="Ganapathi Celebration"
+          onerror="this.onerror=null;this.src='ganesh.jpeg';"
+        >
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= UPDATES ================= -->
+<section id="updates" class="section">
+
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span>UPDATES</span>
+
+      <h2>
+        Temple & Community Updates
+      </h2>
+
+    </div>
+
+
+    <div class="updates-grid">
+
+      <article class="update-card">
+
+        <div class="update-icon">🛕</div>
+
+        <div>
+          <small>Temple</small>
+          <h3>Temple development activities</h3>
+          <p>
+            Updates regarding temple maintenance,
+            development and seva activities.
+          </p>
+        </div>
+
+      </article>
+
+
+      <article class="update-card">
+
+        <div class="update-icon">🙏</div>
+
+        <div>
+          <small>Seva</small>
+          <h3>Community participation</h3>
+          <p>
+            Devotees and villagers can participate
+            in various community activities.
+          </p>
+        </div>
+
+      </article>
+
+
+      <article class="update-card">
+
+        <div class="update-icon">🎉</div>
+
+        <div>
+          <small>Festival</small>
+          <h3>Ganesh Utsav programs</h3>
+          <p>
+            Festival schedules and important announcements
+            will be updated here.
+          </p>
+        </div>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= DONATION ================= -->
+<section id="donate" class="donation-section">
+
+  <div class="container donation-grid">
+
+    <div class="donation-content">
+
+      <span class="donation-label">
+        🙏 SUPPORT TEMPLE
+      </span>
+
+      <h2>
+        Every contribution<br>
+        helps our temple.
+      </h2>
+
+      <p>
+        మీ చిన్న సహాయం కూడా మన దేవాలయ అభివృద్ధికి
+        ఎంతో ఉపయోగపడుతుంది.
+      </p>
+
+      <div class="upi-box">
+
+        <span>UPI ID</span>
+
+        <strong id="upiId">
+          8555096523@ptsbi
+        </strong>
+
+        <button onclick="copyUPI()">
+          📋 Copy UPI ID
+        </button>
+
+      </div>
+
+      <p id="copyMessage" class="copy-message"></p>
+
+    </div>
+
+
+    <div class="donation-card">
+
+      <div class="donation-icon">
+        🙏
+      </div>
+
+      <h3>
+        Donate through UPI
+      </h3>
+
+      <p>
+        Open your UPI app and send your contribution to:
+      </p>
+
+      <strong class="upi-large">
+        8555096523@ptsbi
+      </strong>
+
+      <div class="payment-note">
+        Please verify the UPI name before making payment.
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="section">
+
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span>CONTACT</span>
+
+      <h2>
+        Get in touch with us
+      </h2>
+
+    </div>
+
+
+    <div class="contact-grid">
+
+      <div class="contact-card">
+
+        <div class="contact-icon">📞</div>
+
+        <h3>Phone</h3>
+
+        <p>
+          8555096523
+        </p>
+
+        <a href="tel:+918555096523">
+          Call Now →
+        </a>
+
+      </div>
+
+
+      <div class="contact-card">
+
+        <div class="contact-icon">💬</div>
+
+        <h3>WhatsApp</h3>
+
+        <p>
+          Contact the Seva Samithi
+        </p>
+
+        <a
+          href="https://wa.me/918555096523"
+          target="_blank"
+        >
+          WhatsApp →
+        </a>
+
+      </div>
+
+
+      <div class="contact-card">
+
+        <div class="contact-icon">📍</div>
+
+        <h3>Location</h3>
+
+        <p>
+          Vanjiri, Telangana 504296
+        </p>
+
+        <a
+          href="https://www.google.com/maps/search/?api=1&query=8CCV%2BMH8%2C+Vanjiri%2C+Telangana+504296"
+          target="_blank"
+        >
+          Open Maps →
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= FINAL CTA ================= -->
+<section class="final-cta">
+
+  <div class="container">
+
+    <div class="cta-content">
+
+      <span>🕉️</span>
+
+      <h2>
+        Ganapathi Bappa Morya
+      </h2>
+
+      <p>
+        Together we serve. Together we celebrate.
+      </p>
+
+      <a href="#donate" class="btn btn-primary">
+        🙏 Support Temple
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+
+  <div class="container footer-grid">
+
+    <div>
+
+      <div class="footer-logo">
+        ॐ Sri Ganapathi Seva Samithi
+      </div>
+
+      <p>
+        శ్రీ గణపతి సేవా సమితి
+      </p>
+
+      <small>
+        Vanjiri, Telangana 504296
+      </small>
+
+    </div>
+
+
+    <div>
+
+      <h4>Quick Links</h4>
+
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#temple">Temple</a>
+      <a href="#gallery">Gallery</a>
+
+    </div>
+
+
+    <div>
+
+      <h4>Contact</h4>
+
+      <a href="tel:+918555096523">
+        8555096523
+      </a>
+
+      <a href="https://wa.me/918555096523"
+         target="_blank">
+        WhatsApp
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <div class="footer-bottom">
+
+    <p>
+      © 2026 Sri Ganapathi Seva Samithi.
+      All rights reserved.
+    </p>
+
+  </div>
+
+</footer>
+
+
+<!-- ================= WHATSAPP FLOATING BUTTON ================= -->
+<a
+  class="whatsapp-float"
+  href="https://wa.me/918555096523"
+  target="_blank"
+  aria-label="Contact on WhatsApp"
+>
+  💬
+</a>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+<script>
+
+function toggleMenu() {
+
+  const nav = document.getElementById("mainNav");
+
+  nav.classList.toggle("active");
+
+}
+
+
+/* Close menu after clicking a link */
+
+document.querySelectorAll("#mainNav a").forEach(function(link) {
+
+  link.addEventListener("click", function() {
+
+    document.getElementById("mainNav").classList.remove("active");
+
+  });
+
+});
+
+
+/* Copy UPI */
+
+function copyUPI() {
+
+  const upi = "8555096523@ptsbi";
+
+  navigator.clipboard.writeText(upi)
+    .then(function() {
+
+      document.getElementById("copyMessage").textContent =
+        "✅ UPI ID copied successfully!";
+
+      setTimeout(function() {
+
+        document.getElementById("copyMessage").textContent = "";
+
+      }, 2500);
+
+    })
+    .catch(function() {
+
+      document.getElementById("copyMessage").textContent =
+        "Please copy the UPI ID manually.";
+
+    });
+
+}
+
+
+/* Smooth scrolling */
+
+document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+
+  anchor.addEventListener("click", function(e) {
+
+    const target = document.querySelector(this.getAttribute("href"));
+
+    if (target) {
+
+      e.preventDefault();
+
+      target.scrollIntoView({
+        behavior: "smooth"
+      });
+
+    }
+
+  });
+
+});
+
+</script>
+
+</body>
+</html>
