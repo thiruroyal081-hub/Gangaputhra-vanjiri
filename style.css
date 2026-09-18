@@ -1141,3 +1141,42 @@ nav a:hover {
   }
 
 }
+
+
+/* ================= DONATION FORM & RECEIPT ================= */
+.donation-form-card { text-align:left; }
+.donation-form { margin-top:22px; display:grid; gap:10px; }
+.donation-form label { color:#fff; font-size:12px; font-weight:700; }
+.donation-form input, .donation-form select {
+  width:100%; border:1px solid rgba(255,255,255,.22); border-radius:5px;
+  padding:12px 13px; background:#fff; color:#17383b; font:inherit;
+}
+.donation-form .btn { border:0; cursor:pointer; width:100%; }
+.donation-submit { background:#f4a629; color:#17383b; }
+.donation-submit:disabled { opacity:.65; cursor:wait; }
+.donation-form .payment-note { margin-top:4px; line-height:1.5; }
+.donation-message { min-height:20px; font-size:13px; font-weight:700; }
+.donation-help { margin-top:25px; background:rgba(255,255,255,.32); padding:18px; color:#694d18; }
+.donation-help ol { margin:10px 0 0 20px; }
+.receipt-area { width:min(900px,90%); margin:55px auto 0; }
+.receipt { background:#fff; color:#17383b; padding:35px; border:2px solid #17383b; box-shadow:10px 10px 0 rgba(190,90,30,.35); }
+.receipt-head { display:flex; justify-content:space-between; gap:20px; border-bottom:2px solid #eadbc5; padding-bottom:20px; }
+.receipt-head span { color:#e76f2e; font-size:11px; font-weight:800; letter-spacing:1.5px; }
+.receipt-head h3 { font-family:Georgia,serif; font-size:28px; margin:5px 0; }
+.receipt-head small { color:#718083; }
+.receipt-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; padding:25px 0; }
+.receipt-grid div { border-bottom:1px solid #eadfce; padding-bottom:10px; }
+.receipt-grid span { display:block; color:#758184; font-size:11px; margin-bottom:4px; }
+.receipt-grid strong { display:block; overflow-wrap:anywhere; }
+.receipt-note { color:#69787b; font-size:12px; line-height:1.6; margin-bottom:20px; }
+@media print {
+  body * { visibility:hidden !important; }
+  #receiptArea, #receiptArea * { visibility:visible !important; }
+  #receiptArea { position:absolute; left:0; top:0; width:100%; margin:0; }
+  .receipt { box-shadow:none; border:1px solid #333; }
+  .receipt .btn { display:none !important; }
+}
+@media (max-width:760px) {
+  .receipt-head, .receipt-grid { grid-template-columns:1fr; display:grid; }
+  .receipt { padding:22px; }
+}
