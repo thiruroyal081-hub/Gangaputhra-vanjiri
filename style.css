@@ -1180,3 +1180,12 @@ nav a:hover {
   .receipt-head, .receipt-grid { grid-template-columns:1fr; display:grid; }
   .receipt { padding:22px; }
 }
+
+
+.upi-pay-box { margin-top:20px; padding:20px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14); border-radius:8px; text-align:center; }
+.upi-qr { width:190px; height:190px; margin:0 auto 12px; background:#fff; padding:6px; display:flex; align-items:center; justify-content:center; }
+.upi-qr img, .upi-qr canvas { max-width:100%; height:auto; }
+.qr-title { color:#fff; font-size:13px; margin:8px 0; }
+.qr-upi { color:#f4a629; font-weight:800; margin:6px 0 15px; overflow-wrap:anywhere; }
+.upi-pay-box .btn { margin-top:4px; }
+.upi-pay-message { color:rgba(255,255,255,.78); font-size:11px; line-height:1.5; margin:12px 0 0; }
