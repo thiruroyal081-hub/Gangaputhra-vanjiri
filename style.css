@@ -1189,3 +1189,24 @@ nav a:hover {
 .qr-upi { color:#f4a629; font-weight:800; margin:6px 0 15px; overflow-wrap:anywhere; }
 .upi-pay-box .btn { margin-top:4px; }
 .upi-pay-message { color:rgba(255,255,255,.78); font-size:11px; line-height:1.5; margin:12px 0 0; }
+
+
+.donation-history { background:#fff; padding:60px 20px; color:#17383b; }
+.history-inner { max-width:1050px; margin:0 auto; }
+.history-heading { display:flex; justify-content:space-between; align-items:end; gap:20px; border-bottom:1px solid #eadbc5; padding-bottom:18px; }
+.history-heading span { color:#e76f2e; font-size:11px; font-weight:800; letter-spacing:1.5px; }
+.history-heading h2 { margin:6px 0 0; font-family:Georgia,serif; font-size:32px; }
+.history-total { font-weight:800; }
+.history-note { color:#69787b; font-size:13px; }
+.history-list { margin-top:20px; display:grid; gap:10px; }
+.history-row { display:flex; justify-content:space-between; align-items:center; gap:20px; padding:17px 18px; border:1px solid #eadfce; border-radius:7px; background:#fffaf3; }
+.history-row strong, .history-row span { display:block; }
+.history-row span { color:#69787b; font-size:12px; margin-top:4px; }
+.history-amount { text-align:right; font-weight:800; white-space:nowrap; }
+.history-amount small { display:block; color:#2e8b57; font-size:11px; margin-top:3px; }
+.history-empty { padding:20px; border:1px dashed #d7c7ad; color:#69787b; text-align:center; }
+@media (max-width:760px) {
+ .history-heading { display:block; }
+ .history-total { margin-top:12px; }
+ .history-row { align-items:flex-start; }
+}
