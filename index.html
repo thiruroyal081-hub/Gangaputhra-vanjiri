@@ -497,66 +497,74 @@
   <div class="container donation-grid">
 
     <div class="donation-content">
+      <span class="donation-label">🙏 SUPPORT TEMPLE</span>
 
-      <span class="donation-label">
-        🙏 SUPPORT TEMPLE
-      </span>
-
-      <h2>
-        Every contribution<br>
-        helps our temple.
-      </h2>
+      <h2>Every contribution<br>helps our temple.</h2>
 
       <p>
-        మీ చిన్న సహాయం కూడా మన దేవాలయ అభివృద్ధికి
-        ఎంతో ఉపయోగపడుతుంది.
+        మీ చిన్న సహాయం కూడా మన దేవాలయ అభివృద్ధికి ఎంతో ఉపయోగపడుతుంది.
       </p>
 
       <div class="upi-box">
-
         <span>UPI ID</span>
-
-        <strong id="upiId">
-          8555096523@ptsbi
-        </strong>
-
-        <button onclick="copyUPI()">
-          📋 Copy UPI ID
-        </button>
-
+        <strong id="upiId">8555096523@ptsbi</strong>
+        <button type="button" onclick="copyUPI()">📋 Copy UPI ID</button>
       </div>
 
       <p id="copyMessage" class="copy-message"></p>
 
+      <div class="donation-help">
+        <strong>How it works</strong>
+        <ol>
+          <li>Enter your name and donation amount.</li>
+          <li>Pay using the UPI button below.</li>
+          <li>Enter the UTR/transaction ID after payment.</li>
+          <li>Submit the details to generate your digital receipt.</li>
+        </ol>
+      </div>
     </div>
 
+    <div class="donation-card donation-form-card">
+      <div class="donation-icon">🙏</div>
+      <h3>Temple Donation</h3>
+      <p>Pay through UPI and submit your transaction details.</p>
 
-    <div class="donation-card">
+      <form id="donationForm" class="donation-form">
+        <label for="donorName">Donor name *</label>
+        <input id="donorName" name="donorName" type="text" required maxlength="100" placeholder="Enter your name">
 
-      <div class="donation-icon">
-        🙏
-      </div>
+        <label for="mobile">Mobile number</label>
+        <input id="mobile" name="mobile" type="tel" inputmode="numeric" maxlength="15" placeholder="Enter mobile number">
 
-      <h3>
-        Donate through UPI
-      </h3>
+        <label for="amount">Donation amount (₹) *</label>
+        <input id="amount" name="amount" type="number" min="1" max="1000000" step="0.01" required placeholder="e.g. 500">
 
-      <p>
-        Open your UPI app and send your contribution to:
-      </p>
+        <label for="purpose">Purpose</label>
+        <select id="purpose" name="purpose">
+          <option value="Temple Development">Temple Development</option>
+          <option value="Daily Pooja">Daily Pooja</option>
+          <option value="Ganesh Utsavam">Ganesh Utsavam</option>
+          <option value="Community Seva">Community Seva</option>
+          <option value="General Donation">General Donation</option>
+        </select>
 
-      <strong class="upi-large">
-        8555096523@ptsbi
-      </strong>
+        <button type="button" id="payUpiButton" class="btn btn-primary">💳 Pay with UPI</button>
 
-      <div class="payment-note">
-        Please verify the UPI name before making payment.
-      </div>
+        <label for="utr">UTR / Transaction ID *</label>
+        <input id="utr" name="utr" type="text" required maxlength="100" placeholder="Enter UTR after payment">
 
+        <button type="submit" id="submitDonation" class="btn donation-submit">🧾 Generate Digital Receipt</button>
+
+        <p class="payment-note">
+          Payment status is recorded as submitted/pending until the committee verifies the UTR.
+        </p>
+        <p id="donationMessage" class="donation-message" role="status"></p>
+      </form>
     </div>
 
   </div>
 
+  <div id="receiptArea" class="receipt-area" hidden></div>
 </section>
 
 
@@ -745,79 +753,147 @@
 
 
 <!-- ================= JAVASCRIPT ================= -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 
+const SUPABASE_URL = "https://veuqbplcoluipkomhxhy.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_OmVrbiyJYFU1E5jRfSv3MQ_kp48VCYP";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
 function toggleMenu() {
-
-  const nav = document.getElementById("mainNav");
-
-  nav.classList.toggle("active");
-
+  document.getElementById("mainNav").classList.toggle("active");
 }
-
-
-/* Close menu after clicking a link */
 
 document.querySelectorAll("#mainNav a").forEach(function(link) {
-
   link.addEventListener("click", function() {
-
     document.getElementById("mainNav").classList.remove("active");
-
   });
-
 });
 
-
-/* Copy UPI */
-
 function copyUPI() {
-
   const upi = "8555096523@ptsbi";
-
-  navigator.clipboard.writeText(upi)
-    .then(function() {
-
-      document.getElementById("copyMessage").textContent =
-        "✅ UPI ID copied successfully!";
-
-      setTimeout(function() {
-
-        document.getElementById("copyMessage").textContent = "";
-
-      }, 2500);
-
-    })
-    .catch(function() {
-
-      document.getElementById("copyMessage").textContent =
-        "Please copy the UPI ID manually.";
-
-    });
-
+  navigator.clipboard.writeText(upi).then(function() {
+    document.getElementById("copyMessage").textContent = "✅ UPI ID copied successfully!";
+    setTimeout(function() {
+      document.getElementById("copyMessage").textContent = "";
+    }, 2500);
+  }).catch(function() {
+    document.getElementById("copyMessage").textContent = "Please copy the UPI ID manually.";
+  });
 }
 
-
-/* Smooth scrolling */
-
 document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
-
   anchor.addEventListener("click", function(e) {
-
     const target = document.querySelector(this.getAttribute("href"));
-
     if (target) {
-
       e.preventDefault();
-
-      target.scrollIntoView({
-        behavior: "smooth"
-      });
-
+      target.scrollIntoView({behavior: "smooth"});
     }
-
   });
+});
 
+document.getElementById("payUpiButton").addEventListener("click", function() {
+  const amount = document.getElementById("amount").value;
+  const params = new URLSearchParams({
+    pa: "8555096523@ptsbi",
+    pn: "Sri Ganapathi Seva Samithi",
+    cu: "INR"
+  });
+  if (amount && Number(amount) > 0) params.set("am", Number(amount).toFixed(2));
+  window.location.href = "upi://pay?" + params.toString();
+});
+
+function createReceiptNumber() {
+  const year = new Date().getFullYear();
+  const unique = String(Date.now()).slice(-8);
+  return "GP-" + year + "-" + unique;
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, function(char) {
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[char];
+  });
+}
+
+function showReceipt(data) {
+  const area = document.getElementById("receiptArea");
+  area.hidden = false;
+  area.innerHTML = `
+    <div class="receipt">
+      <div class="receipt-head">
+        <div>
+          <span>🙏 SRI GANAPATHI SEVA SAMITHI</span>
+          <h3>Digital Donation Receipt</h3>
+          <small>Vanjiri, Telangana 504296</small>
+        </div>
+        <strong>${escapeHtml(data.receipt_number)}</strong>
+      </div>
+      <div class="receipt-grid">
+        <div><span>Donor</span><strong>${escapeHtml(data.donor_name)}</strong></div>
+        <div><span>Amount</span><strong>₹${Number(data.amount).toFixed(2)}</strong></div>
+        <div><span>Purpose</span><strong>${escapeHtml(data.purpose || "General Donation")}</strong></div>
+        <div><span>UTR / Transaction ID</span><strong>${escapeHtml(data.utr)}</strong></div>
+        <div><span>Date</span><strong>${escapeHtml(new Date(data.created_at).toLocaleString("en-IN"))}</strong></div>
+        <div><span>Status</span><strong>Submitted — pending verification</strong></div>
+      </div>
+      <p class="receipt-note">Thank you for supporting Sri Ganapathi Seva Samithi. This receipt records the details submitted by the donor; it is not independent confirmation of bank settlement.</p>
+      <button type="button" class="btn btn-primary" onclick="window.print()">🖨️ Print / Save Receipt</button>
+    </div>
+  `;
+  area.scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+document.getElementById("donationForm").addEventListener("submit", async function(event) {
+  event.preventDefault();
+
+  const message = document.getElementById("donationMessage");
+  const submit = document.getElementById("submitDonation");
+  message.textContent = "";
+  submit.disabled = true;
+  submit.textContent = "Saving donation...";
+
+  const donorName = document.getElementById("donorName").value.trim();
+  const mobile = document.getElementById("mobile").value.trim();
+  const amount = Number(document.getElementById("amount").value);
+  const purpose = document.getElementById("purpose").value;
+  const utr = document.getElementById("utr").value.trim();
+
+  if (!donorName || !amount || amount <= 0 || !utr) {
+    message.textContent = "Please complete the required fields.";
+    submit.disabled = false;
+    submit.textContent = "🧾 Generate Digital Receipt";
+    return;
+  }
+
+  const receiptNumber = createReceiptNumber();
+
+  const {data, error} = await supabaseClient
+    .from("donations")
+    .insert({
+      receipt_number: receiptNumber,
+      donor_name: donorName,
+      mobile: mobile || null,
+      amount: amount,
+      purpose: purpose,
+      utr: utr,
+      payment_status: "pending"
+    })
+    .select("receipt_number, donor_name, amount, purpose, utr, payment_status, created_at")
+    .single();
+
+  if (error) {
+    console.error(error);
+    message.textContent = "❌ Could not save the donation. Please check the Supabase setup and try again.";
+    submit.disabled = false;
+    submit.textContent = "🧾 Generate Digital Receipt";
+    return;
+  }
+
+  showReceipt(data);
+  this.reset();
+  message.textContent = "✅ Donation details saved successfully.";
+  submit.disabled = false;
+  submit.textContent = "🧾 Generate Digital Receipt";
 });
 
 </script>
