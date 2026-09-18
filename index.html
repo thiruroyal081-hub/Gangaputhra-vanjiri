@@ -508,8 +508,10 @@
 
       <div class="upi-box">
         <span>UPI ID</span>
-        <strong id="upiId">8555096523@ptsbi</strong>
-        <button type="button" onclick="copyUPI()">📋 Copy UPI ID</button>
+        <button type="button" class="upi-id-copy" onclick="copyUPI()" aria-label="Copy UPI ID">
+          <strong id="upiId">8555096523@ptsbi</strong>
+          <span>📋 Tap to copy UPI ID</span>
+        </button>
       </div>
 
       <p id="copyMessage" class="copy-message"></p>
@@ -553,9 +555,10 @@
   <div class="upi-qr" id="upiQr" aria-label="UPI payment QR code"></div>
   <p class="qr-title">📱 Scan this QR code with any UPI app</p>
   <p class="qr-upi">8555096523@ptsbi</p>
-  <button type="button" id="payUpiButton" class="btn btn-primary">💳 Open UPI App</button>
+  <button type="button" class="btn btn-primary upi-copy-main" onclick="copyUPI()">📋 Copy UPI ID</button>
+  <button type="button" id="payUpiButton" class="btn btn-outline">💳 Pay with UPI</button>
   <p id="upiPayMessage" class="upi-pay-message">
-    On a computer, scan the QR with your phone. On a mobile, tap the button to open a supported UPI app.
+    You can copy the UPI ID and pay manually, or use “Pay with UPI” to open your UPI app.
   </p>
 </div>
 
