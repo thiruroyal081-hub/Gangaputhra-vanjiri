@@ -1210,3 +1210,24 @@ nav a:hover {
  .history-total { margin-top:12px; }
  .history-row { align-items:flex-start; }
 }
+
+
+.admin-section { background:#f7f1e8; padding:60px 20px; }
+.admin-inner { max-width:1050px; margin:0 auto; }
+.admin-card { margin-top:22px; padding:25px; background:#fff; border:1px solid #eadfce; border-radius:10px; box-shadow:0 8px 25px rgba(0,0,0,.05); }
+.admin-card h3 { margin-top:0; }
+.admin-card input { width:100%; max-width:420px; padding:12px 14px; border:1px solid #d8cbb8; border-radius:6px; margin:8px 0 12px; box-sizing:border-box; }
+.admin-message { margin-top:10px; font-weight:700; }
+.admin-panel-head { display:flex; align-items:center; justify-content:space-between; gap:15px; }
+.admin-donation-row { display:flex; justify-content:space-between; gap:20px; align-items:center; padding:18px 0; border-top:1px solid #eadfce; }
+.admin-donation-info strong, .admin-donation-info span { display:block; }
+.admin-donation-info span { font-size:13px; color:#69787b; margin-top:4px; }
+.admin-actions { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+.btn-success { background:#2e8b57; color:#fff; border:0; }
+.btn-danger { background:#b84444; color:#fff; border:0; }
+.nav-admin { font-weight:700; }
+@media (max-width:760px) {
+ .admin-donation-row { display:block; }
+ .admin-actions { justify-content:flex-start; margin-top:14px; }
+ .admin-panel-head { align-items:flex-start; }
+}
