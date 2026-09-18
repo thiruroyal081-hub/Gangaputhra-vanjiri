@@ -572,7 +572,24 @@
 
   </div>
 
-  <div id="receiptArea" class="receipt-area" hidden></div>
+  
+<section id="donationHistory" class="donation-history">
+  <div class="history-inner">
+    <div class="history-heading">
+      <div>
+        <span>🙏 DONATION HISTORY</span>
+        <h2>Recent Successful Donations</h2>
+      </div>
+      <div id="historyTotal" class="history-total">Verified donations: ₹0</div>
+    </div>
+    <p class="history-note">Only donations verified by the committee are shown here. UTR numbers and mobile numbers are kept private.</p>
+    <div id="historyList" class="history-list">
+      <div class="history-empty">Loading verified donations...</div>
+    </div>
+  </div>
+</section>
+
+<div id="receiptArea" class="receipt-area" hidden></div>
 </section>
 
 
@@ -761,7 +778,48 @@
 
 
 <!-- ================= JAVASCRIPT ================= -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+async function loadVerifiedDonationHistory() {
+  const list = document.getElementById("historyList");
+  const totalEl = document.getElementById("historyTotal");
+  if (!list) return;
+
+  const {data, error} = await supabaseClient
+    .from("donations")
+    .select("donor_name, amount, purpose, created_at, payment_status")
+    .eq("payment_status", "verified")
+    .order("created_at", {ascending:false})
+    .limit(20);
+
+  if (error) {
+    console.error("Donation history:", error);
+    list.innerHTML = '<div class="history-empty">Donation history is temporarily unavailable.</div>';
+    return;
+  }
+
+  const rows = data || [];
+  const total = rows.reduce((sum, row) => sum + Number(row.amount || 0), 0);
+  totalEl.textContent = "Verified donations: ₹" + total.toLocaleString("en-IN", {minimumFractionDigits:2, maximumFractionDigits:2});
+
+  if (!rows.length) {
+    list.innerHTML = '<div class="history-empty">No verified donations yet.</div>';
+    return;
+  }
+
+  list.innerHTML = rows.map(function(row) {
+    const donor = escapeHtml(row.donor_name);
+    const amount = Number(row.amount || 0).toLocaleString("en-IN", {minimumFractionDigits:2, maximumFractionDigits:2});
+    const purpose = escapeHtml(row.purpose || "General Donation");
+    const date = new Date(row.created_at).toLocaleDateString("en-IN");
+    return '<div class="history-row">' +
+      '<div><strong>' + donor + '</strong><span>' + purpose + ' • ' + date + '</span></div>' +
+      '<div class="history-amount">₹' + amount + '<small>✓ Successful</small></div>' +
+    '</div>';
+  }).join("");
+}
+
+loadVerifiedDonationHistory();
+</script>
 <script>
 
 const SUPABASE_URL = "https://veuqbplcoluipkomhxhy.supabase.co";
@@ -820,14 +878,16 @@ document.getElementById("payUpiButton").addEventListener("click", function() {
     return;
   }
 
-  if (!/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-    message.textContent = "You are on a computer. Please scan the QR code above with your phone's UPI app.";
+  const upiLink = buildUpiLink();
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  if (!isMobile) {
+    message.textContent = "On this computer, use your phone to scan the QR code above. The QR opens in your UPI app.";
     document.getElementById("upiQr").scrollIntoView({behavior:"smooth", block:"center"});
     return;
   }
 
-  const upiLink = buildUpiLink();
-  message.textContent = "Opening your UPI app...";
+  message.textContent = "Opening a UPI payment app...";
   window.location.href = upiLink;
 });
 
