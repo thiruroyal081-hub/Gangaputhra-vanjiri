@@ -48,6 +48,7 @@
       <a href="#updates">Updates</a>
       <a href="#contact">Contact</a>
       <a href="#donate" class="nav-donate">Donate</a>
+      <a href="#admin" class="nav-admin">Admin</a>
     </nav>
 
   </div>
@@ -573,6 +574,33 @@
   </div>
 
   
+
+<section id="admin" class="admin-section">
+  <div class="admin-inner">
+    <div class="history-heading">
+      <div>
+        <span>🔐 ADMIN</span>
+        <h2>Donation Verification</h2>
+      </div>
+    </div>
+    <div id="adminLogin" class="admin-card">
+      <h3>Administrator Login</h3>
+      <p>Enter the admin password to review pending donations.</p>
+      <input id="adminPassword" type="password" placeholder="Admin password">
+      <button type="button" class="btn btn-primary" id="adminLoginButton">🔐 Login</button>
+      <div id="adminLoginMessage" class="admin-message"></div>
+    </div>
+    <div id="adminPanel" class="admin-card" hidden>
+      <div class="admin-panel-head">
+        <h3>Pending Donations</h3>
+        <button type="button" class="btn btn-outline" id="adminRefreshButton">↻ Refresh</button>
+      </div>
+      <div id="adminDonationList"><div class="history-empty">Loading...</div></div>
+      <button type="button" class="btn btn-outline" id="adminLogoutButton">Logout</button>
+    </div>
+  </div>
+</section>
+
 <section id="donationHistory" class="donation-history">
   <div class="history-inner">
     <div class="history-heading">
@@ -819,6 +847,102 @@ async function loadVerifiedDonationHistory() {
 }
 
 loadVerifiedDonationHistory();
+
+/*
+  Admin verification:
+  IMPORTANT: This demo login is only a front-end gate. For production,
+  use Supabase Auth + a server-side/admin-only RLS policy. Never put a
+  Supabase service-role/secret key in this public GitHub Pages site.
+*/
+const ADMIN_PASSWORD = "CHANGE_THIS_ADMIN_PASSWORD";
+let adminLoggedIn = false;
+
+document.getElementById("adminLoginButton")?.addEventListener("click", function() {
+  const password = document.getElementById("adminPassword").value;
+  const msg = document.getElementById("adminLoginMessage");
+  if (password !== ADMIN_PASSWORD) {
+    msg.textContent = "❌ Incorrect admin password.";
+    return;
+  }
+  adminLoggedIn = true;
+  document.getElementById("adminLogin").hidden = true;
+  document.getElementById("adminPanel").hidden = false;
+  loadAdminDonations();
+});
+
+async function loadAdminDonations() {
+  if (!adminLoggedIn) return;
+  const list = document.getElementById("adminDonationList");
+  list.innerHTML = '<div class="history-empty">Loading pending donations...</div>';
+  const {data, error} = await supabaseClient
+    .from("donations")
+    .select("id, receipt_number, donor_name, mobile, amount, purpose, utr, created_at, payment_status")
+    .eq("payment_status", "pending")
+    .order("created_at", {ascending:false});
+
+  if (error) {
+    list.innerHTML = '<div class="history-empty">❌ Could not load donations. Check your Supabase RLS policy.</div>';
+    console.error(error);
+    return;
+  }
+
+  if (!data || !data.length) {
+    list.innerHTML = '<div class="history-empty">No pending donations.</div>';
+    return;
+  }
+
+  list.innerHTML = data.map(function(row) {
+    return '<div class="admin-donation-row">' +
+      '<div class="admin-donation-info">' +
+      '<strong>' + escapeHtml(row.donor_name) + '</strong>' +
+      '<span>₹' + Number(row.amount).toLocaleString("en-IN", {minimumFractionDigits:2}) + ' • ' + escapeHtml(row.purpose || "General Donation") + '</span>' +
+      '<span>UTR: ' + escapeHtml(row.utr) + ' • ' + escapeHtml(new Date(row.created_at).toLocaleString("en-IN")) + '</span>' +
+      '</div>' +
+      '<div class="admin-actions">' +
+      '<button type="button" class="btn btn-success" onclick="verifyDonation(' + row.id + ')">✅ Verify Payment</button>' +
+      '<button type="button" class="btn btn-danger" onclick="rejectDonation(' + row.id + ')">❌ Reject</button>' +
+      '</div>' +
+      '</div>';
+  }).join("");
+}
+
+async function updateDonationStatus(id, status) {
+  if (!adminLoggedIn) return;
+  const {error} = await supabaseClient
+    .from("donations")
+    .update({payment_status: status})
+    .eq("id", id);
+
+  if (error) {
+    alert("Could not update payment status. Check your Supabase UPDATE policy.");
+    console.error(error);
+    return;
+  }
+
+  await loadAdminDonations();
+  await loadVerifiedDonationHistory();
+}
+
+window.verifyDonation = function(id) {
+  if (confirm("Have you checked the bank/UPI transaction and confirmed this payment was received?")) {
+    updateDonationStatus(id, "verified");
+  }
+};
+
+window.rejectDonation = function(id) {
+  if (confirm("Reject this donation submission?")) {
+    updateDonationStatus(id, "rejected");
+  }
+};
+
+document.getElementById("adminRefreshButton")?.addEventListener("click", loadAdminDonations);
+document.getElementById("adminLogoutButton")?.addEventListener("click", function() {
+  adminLoggedIn = false;
+  document.getElementById("adminPanel").hidden = true;
+  document.getElementById("adminLogin").hidden = false;
+  document.getElementById("adminPassword").value = "";
+  document.getElementById("adminLoginMessage").textContent = "";
+});
 </script>
 <script>
 
