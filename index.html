@@ -812,15 +812,28 @@
 const SUPABASE_URL = "https://veuqbplcoluipkomhxhy.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_OmVrbiyJYFU1E5jRfSv3MQ_kp48VCYP";
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
-const QR_UPI_PAYLOAD = "upi://pay?pa=8555096523@ptsbi&pn=Sri%20Ganapathi%20Seva%20Samithi&cu=INR";
-new QRCode(document.getElementById("upiQr"), {
-  text: QR_UPI_PAYLOAD,
-  width: 178,
-  height: 178,
-  colorDark: "#000000",
-  colorLight: "#ffffff",
-  correctLevel: QRCode.CorrectLevel.M
-});
+function renderUpiQr() {
+  const qrBox = document.getElementById("upiQr");
+  if (!qrBox) return;
+  const amount = Number(document.getElementById("amount").value);
+  const params = new URLSearchParams({
+    pa: "8555096523@ptsbi",
+    pn: "Sri Ganapathi Seva Samithi",
+    cu: "INR"
+  });
+  if (amount > 0) params.set("am", amount.toFixed(2));
+  qrBox.innerHTML = "";
+  new QRCode(qrBox, {
+    text: "upi://pay?" + params.toString(),
+    width: 178,
+    height: 178,
+    colorDark: "#000000",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.M
+  });
+}
+renderUpiQr();
+document.getElementById("amount").addEventListener("input", renderUpiQr);
 
 const ADMIN_PASSWORD = "Vanjiri2026";
 let adminLoggedIn = false;
@@ -880,7 +893,7 @@ function buildUpiLink() {
 document.getElementById("payUpiButton").addEventListener("click", function() {
   const amount = Number(document.getElementById("amount").value);
   const message = document.getElementById("upiPayMessage");
-  const qr = document.querySelector(".upi-qr");
+  const qr = document.getElementById("upiQr");
 
   if (!amount || amount <= 0) {
     message.textContent = "Please enter the donation amount first.";
