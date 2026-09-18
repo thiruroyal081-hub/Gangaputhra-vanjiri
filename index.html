@@ -549,7 +549,7 @@
         </select>
 
         <div class="upi-pay-box">
-  <div id="upiQr" class="upi-qr"></div>
+  <div class="upi-qr"><img src="upi-qr.svg" alt="Official UPI payment QR code"></div>
   <p class="qr-title">📱 Scan this QR code with any UPI app</p>
   <p class="qr-upi">8555096523@ptsbi</p>
   <button type="button" id="payUpiButton" class="btn btn-primary">💳 Open UPI App</button>
@@ -762,7 +762,6 @@
 
 <!-- ================= JAVASCRIPT ================= -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
 
 const SUPABASE_URL = "https://veuqbplcoluipkomhxhy.supabase.co";
@@ -811,21 +810,6 @@ function buildUpiLink() {
   if (amount && Number(amount) > 0) params.set("am", Number(amount).toFixed(2));
   return "upi://pay?" + params.toString();
 }
-
-function refreshUpiQr() {
-  const qr = document.getElementById("upiQr");
-  if (!qr || typeof QRCode === "undefined") return;
-  qr.innerHTML = "";
-  new QRCode(qr, {
-    text: buildUpiLink(),
-    width: 190,
-    height: 190,
-    correctLevel: QRCode.CorrectLevel.M
-  });
-}
-
-document.getElementById("amount").addEventListener("input", refreshUpiQr);
-refreshUpiQr();
 
 document.getElementById("payUpiButton").addEventListener("click", function() {
   const amount = Number(document.getElementById("amount").value);
