@@ -803,3 +803,27 @@ body.home-page .schedule-section{
 .donate-note-box>span{font-size:24px}.donate-note-box strong{font-family:"Playfair Display",Georgia,serif;font-size:18px}.donate-note-box p{color:var(--muted);font-size:11px;line-height:1.6;margin-top:4px}
 @media(max-width:950px){.donate-hero-grid,.donation-portal-grid{grid-template-columns:1fr}.donation-portal-card{position:static}.how-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:650px){.donate-hero{padding:50px 0 65px}.donate-hero h1{font-size:43px}.donate-hero-image img{height:350px}.purpose-grid{grid-template-columns:1fr}.amount-buttons{grid-template-columns:1fr 1fr}.how-grid{grid-template-columns:1fr}.donation-portal{padding:65px 0}.donation-portal-card{padding:22px 18px}}
+
+/* ================= SMART DONATION DASHBOARD ================= */
+.smart-dashboard{padding:85px 0;background:linear-gradient(180deg,#f7efe2,#fffaf3)}
+.smart-heading{text-align:center;max-width:720px;margin:0 auto 32px}
+.smart-heading span,.smart-label{color:var(--saffron);font-size:10px;font-weight:900;letter-spacing:2px}
+.smart-heading h2{font-family:"Playfair Display",Georgia,serif;font-size:38px;margin:8px 0}
+.smart-heading p{color:var(--muted);font-size:12px}
+.goal-card{position:relative;background:var(--green-2);color:#fff;border-radius:24px;padding:30px;overflow:hidden}
+.goal-card h3{font-family:"Playfair Display",Georgia,serif;font-size:25px;margin:7px 0}
+.goal-card p{color:#cbd8d4;font-size:12px}
+.goal-number{position:absolute;right:30px;top:25px;color:var(--gold);font-size:38px;font-weight:900}
+.goal-track{height:10px;background:rgba(255,255,255,.13);border-radius:999px;margin-top:22px;overflow:hidden}
+.goal-track span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--saffron));border-radius:999px;transition:1s}
+.smart-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin:18px 0}
+.smart-stats>div{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px}
+.smart-stats span{font-size:22px}.smart-stats small{display:block;color:var(--muted);font-size:9px;font-weight:900;letter-spacing:1px;margin-top:9px}.smart-stats strong{display:block;font-family:"Playfair Display",Georgia,serif;font-size:25px;color:var(--green);margin-top:3px}
+.smart-breakdown{display:grid;grid-template-columns:1.5fr .8fr;gap:15px}
+.smart-breakdown>div{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px}
+.smart-subhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-family:"Playfair Display",Georgia,serif;font-size:19px}
+.smart-subhead button{border:1px solid var(--line);background:#fff;border-radius:9px;padding:6px 10px;color:var(--green);font-size:11px;font-weight:800;cursor:pointer}
+.breakdown-row{display:grid;grid-template-columns:1fr auto 45px;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);font-size:11px;align-items:center}.breakdown-row:last-child{border-bottom:0}.breakdown-row strong{color:var(--green)}.breakdown-row small{color:var(--saffron);font-weight:900;text-align:right}
+.smart-live{display:flex;flex-direction:column;justify-content:center}.smart-live>span{color:#248c62;font-size:10px;font-weight:900;letter-spacing:1px}.smart-live strong{font-family:"Playfair Display",Georgia,serif;font-size:22px;margin:10px 0}.smart-live p{color:var(--muted);font-size:11px;line-height:1.7}
+.receipt-qr-wrap{display:flex;flex-direction:column;align-items:center;gap:7px;margin:20px auto; padding:15px;border:1px dashed var(--line);border-radius:14px;max-width:170px}.receipt-qr-wrap small{font-size:9px;color:var(--muted);text-align:center}
+@media(max-width:760px){.smart-dashboard{padding:65px 0}.smart-heading h2{font-size:31px}.smart-stats{grid-template-columns:1fr}.smart-breakdown{grid-template-columns:1fr}.goal-number{position:static;margin-top:10px}.goal-card h3{font-size:22px}}
