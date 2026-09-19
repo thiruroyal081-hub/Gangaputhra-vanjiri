@@ -844,3 +844,9 @@ body.home-page .schedule-section{
 .temple-detail-grid h2{font-family:"Playfair Display",Georgia,serif;font-size:38px;line-height:1.12;margin-top:8px}
 .temple-detail-grid p{color:var(--muted);font-size:14px;line-height:1.8;margin-bottom:22px}
 @media(max-width:800px){.temple-modern{padding:48px 0 65px}.temple-info-grid,.temple-detail-grid{grid-template-columns:1fr}.temple-info-grid .info-card{min-height:auto}.temple-feature-image img{height:300px}.temple-detail-grid{padding-top:45px}.temple-detail-grid h2{font-size:31px}}
+
+/* Donation contact only — no UPI/payment UI */
+.donation-contact-only{padding:80px 0;background:#fffaf3}
+.donation-contact-card{max-width:760px;margin:auto;text-align:center;background:#fff;border:1px solid var(--line);border-radius:24px;padding:45px;box-shadow:0 15px 35px rgba(23,68,63,.08)}
+.donation-contact-card h2{font-family:"Playfair Display",Georgia,serif;font-size:38px;margin:8px 0 12px}.donation-contact-card p{color:var(--muted);margin-bottom:22px}
+@media(max-width:600px){.donation-contact-card{padding:30px 20px}.donation-contact-card h2{font-size:30px}}
