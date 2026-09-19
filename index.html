@@ -576,10 +576,16 @@
         </select>
 
         <div class="upi-pay-box">
+  <div class="website-upi-qr">
+    <h4>📱 Scan & Pay with UPI</h4>
+    <div id="upiQrCode" aria-label="UPI payment QR code"></div>
+    <p id="qrAmountText">Enter an amount to generate the payment QR.</p>
+    <small>Scan this QR with any supported UPI app. The QR uses the donation amount entered above.</small>
+  </div>
   <button type="button" id="payUpiButton" class="btn btn-primary upi-direct-button">📱 Pay with UPI App</button>
   <button type="button" class="btn btn-outline upi-copy-main" onclick="copyUPI()">📋 Copy UPI ID</button>
   <p id="upiPayMessage" class="upi-pay-message">
-    Enter your amount, then use the button to open your UPI app. After payment, enter the UTR / Transaction ID below.
+    Enter your amount, then scan the QR or use the UPI app button. After payment, enter the UTR / Transaction ID below.
   </p>
 </div>
 
@@ -830,6 +836,7 @@
 
 
 <!-- ================= JAVASCRIPT ================= -->
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL = "https://veuqbplcoluipkomhxhy.supabase.co";
@@ -879,6 +886,31 @@ document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
   });
 });
 
+let upiQr = null;
+
+function renderUpiQr() {
+  const amount = Number(document.getElementById("amount").value);
+  const qr = document.getElementById("upiQrCode");
+  const amountText = document.getElementById("qrAmountText");
+  if (!qr || !amountText) return;
+
+  qr.innerHTML = "";
+
+  if (!amount || amount <= 0) {
+    amountText.textContent = "Enter an amount to generate the payment QR.";
+    return;
+  }
+
+  const upiLink = buildUpiLink();
+  upiQr = new QRCode(qr, {
+    text: upiLink,
+    width: 220,
+    height: 220,
+    correctLevel: QRCode.CorrectLevel.M
+  });
+  amountText.textContent = "Payment QR for ₹" + amount.toFixed(2);
+}
+
 function buildUpiLink() {
   const amount = Number(document.getElementById("amount").value);
   const params = new URLSearchParams({
@@ -889,6 +921,8 @@ function buildUpiLink() {
   if (amount > 0) params.set("am", amount.toFixed(2));
   return "upi://pay?" + params.toString();
 }
+
+document.getElementById("amount").addEventListener("input", renderUpiQr);
 
 document.getElementById("payUpiButton").addEventListener("click", function() {
   const amount = Number(document.getElementById("amount").value);
@@ -1017,7 +1051,8 @@ async function updateDonationStatus(id,status) {
   }
 
   await loadAdminDonations();
-  await loadVerifiedDonationHistory();
+  await renderUpiQr();
+loadVerifiedDonationHistory();
 }
 
 window.verifyDonation = function(id) {
