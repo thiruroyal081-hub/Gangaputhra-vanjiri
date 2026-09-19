@@ -475,3 +475,7 @@ nav a:hover{background:var(--gold-soft);color:var(--green)}
   .receipt-head,.receipt-grid{display:grid;grid-template-columns:1fr}
   .receipt{padding:21px}
 }
+
+/* UPI SAFETY: keep UPI ID accessible without opening a payment screen */
+.upi-direct-button{display:none!important}
+.upi-copy-main{display:block!important}
