@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Support Sri Ganapathi Seva Samithi, Vanjiri through temple donations, Annadanam, Pooja and Ganesh Utsavam.">
+  <title>Donate | Sri Ganapathi Seva Samithi</title>
+  <link rel="stylesheet" href="style.css?v=donation3">
+</head>
+<body class="donation-page">
+
+<div class="topbar">
+  <div class="container"><span>🙏 శ్రీ గణపతి సేవా సమితి</span><span>Vanjiri, Telangana</span></div>
+</div>
+
+<header class="header">
+  <div class="container nav-container">
+    <a href="index.html" class="logo">
+      <span class="logo-icon">ॐ</span>
+      <div><strong>Sri Ganapathi Seva Samithi</strong><small>శ్రీ గణపతి సేవా సమితి</small></div>
+    </a>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    <nav id="mainNav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="temple.html">Temple</a>
+      <a href="history.html">History</a>
+      <a href="pooja.html">Pooja & Seva</a>
+      <a href="utsavam.html">Utsavam</a>
+      <a href="darshan.html">Darshan</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="updates.html">Updates</a>
+      <a href="contact.html">Contact</a>
+      <a href="donate.html" class="nav-donate active">Donate</a>
+      <a href="index.html#admin" class="nav-admin">Admin</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="donate-hero">
+  <div class="container donate-hero-grid">
+    <div>
+      <a href="index.html" class="donate-back">← Back to Home</a>
+      <span class="donation-label">🙏 SUPPORT OUR TEMPLE</span>
+      <h1>Every contribution helps our temple.</h1>
+      <p>మీ చిన్న సహాయం కూడా మన దేవాలయ అభివృద్ధికి ఎంతో ఉపయోగపడుతుంది.</p>
+      <div class="donate-trust-row">
+        <span>✓ UPI Payment</span><span>✓ Digital Receipt</span><span>✓ UTR Verification</span>
+      </div>
+    </div>
+    <div class="donate-hero-image">
+      <img src="ganapathi-idol.jpg" alt="Sri Ganapathi Idol" onerror="this.onerror=null;this.src='ganesh.jpeg';">
+      <div><strong>Ganapathi Bappa Morya</strong><small>Support • Seva • Devotion</small></div>
+    </div>
+  </div>
+</section>
+
+<section class="donation-portal">
+  <div class="container">
+    <div class="donation-portal-grid">
+      <div>
+        <div class="donate-section-heading">
+          <span>1 · CHOOSE YOUR SEVA</span>
+          <h2>Where would you like to contribute?</h2>
+        </div>
+        <div class="purpose-grid">
+          <button type="button" class="purpose-card selected" data-purpose="Temple Development"><span>🛕</span><strong>Temple Development</strong><small>Support temple construction and maintenance.</small></button>
+          <button type="button" class="purpose-card" data-purpose="Annadanam"><span>🍚</span><strong>Annadanam</strong><small>Support community food service.</small></button>
+          <button type="button" class="purpose-card" data-purpose="Daily Pooja"><span>🪔</span><strong>Daily Pooja</strong><small>Support regular worship and aarti.</small></button>
+          <button type="button" class="purpose-card" data-purpose="Ganesh Utsavam"><span>🎉</span><strong>Ganesh Utsavam</strong><small>Support festival celebrations and programs.</small></button>
+        </div>
+
+        <div class="donate-section-heading amount-heading">
+          <span>2 · SELECT AMOUNT</span>
+          <h2>Choose a contribution</h2>
+        </div>
+        <div class="amount-buttons">
+          <button type="button" data-amount="501">₹501</button>
+          <button type="button" data-amount="1001">₹1,001</button>
+          <button type="button" data-amount="2501">₹2,501</button>
+          <button type="button" data-amount="5001">₹5,001</button>
+        </div>
+      </div>
+
+      <div class="donation-card donation-form-card donation-portal-card">
+        <div class="donation-icon">🙏</div>
+        <h3>Temple Donation</h3>
+        <p>Complete your details, pay by UPI, then enter the UTR.</p>
+        <form id="donationForm" class="donation-form">
+          <label for="donorName">Donor name *</label>
+          <input id="donorName" type="text" required maxlength="100" placeholder="Enter your full name">
+
+          <label for="mobile">Mobile number</label>
+          <input id="mobile" type="tel" inputmode="numeric" maxlength="15" placeholder="Enter mobile number">
+
+          <label for="amount">Donation amount (₹) *</label>
+          <input id="amount" type="number" min="1" max="1000000" step="0.01" required placeholder="e.g. 1001">
+
+          <label for="purpose">Purpose</label>
+          <select id="purpose">
+            <option value="Temple Development">Temple Development</option>
+            <option value="Annadanam">Annadanam</option>
+            <option value="Daily Pooja">Daily Pooja</option>
+            <option value="Ganesh Utsavam">Ganesh Utsavam</option>
+            <option value="Community Seva">Community Seva</option>
+            <option value="General Donation">General Donation</option>
+          </select>
+
+          <div class="upi-pay-box">
+            <div class="donate-upi-label">UPI ID</div>
+            <button type="button" class="donate-upi-copy" onclick="copyUPI()"><strong>8555096523@ptsbi</strong><span>📋 Tap to copy</span></button>
+            <button type="button" id="payUpiButton" class="btn btn-primary upi-direct-button">📱 Pay with UPI App</button>
+            <p id="upiPayMessage" class="upi-pay-message">Enter your name and amount, then open your UPI app.</p>
+          </div>
+
+          <label for="utr">UTR / Transaction ID *</label>
+          <input id="utr" type="text" required maxlength="100" placeholder="Enter UTR after payment">
+
+          <button type="submit" id="submitDonation" class="btn donation-submit">🧾 Generate Digital Receipt</button>
+          <p class="payment-note">Your submission is recorded as pending until the committee verifies the UTR.</p>
+          <p id="donationMessage" class="donation-message" role="status"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="donate-how">
+  <div class="container">
+    <div class="donate-section-heading center">
+      <span>3 · HOW IT WORKS</span><h2>Simple & transparent</h2>
+    </div>
+    <div class="how-grid">
+      <div><span>01</span><strong>Enter details</strong><p>Provide your name, amount and purpose.</p></div>
+      <div><span>02</span><strong>Pay by UPI</strong><p>Use the UPI button or copy the UPI ID.</p></div>
+      <div><span>03</span><strong>Enter UTR</strong><p>Submit the transaction reference after payment.</p></div>
+      <div><span>04</span><strong>Get receipt</strong><p>Your digital receipt is generated immediately after submission.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="donate-note">
+  <div class="container">
+    <div class="donate-note-box">
+      <span>🔐</span><div><strong>Donation verification</strong><p>For transparency, every submitted donation remains pending until the committee checks the UTR and verifies the payment.</p></div>
+    </div>
+  </div>
+</section>
+
+<div id="receiptArea" class="receipt-area" hidden></div>
+</main>
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div><div class="footer-logo">ॐ Sri Ganapathi Seva Samithi</div><p>శ్రీ గణపతి సేవా సమితి</p><small>Vanjiri, Telangana 504296</small></div>
+    <div><h4>Quick Links</h4><a href="index.html">Home</a><a href="temple.html">Temple</a><a href="gallery.html">Gallery</a><a href="donate.html">Donate</a></div>
+    <div><h4>Contact</h4><a href="tel:+918555096523">8555096523</a><a href="https://wa.me/918555096523" target="_blank">WhatsApp</a></div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 Sri Ganapathi Seva Samithi. All rights reserved.</p></div>
+</footer>
+
+<a class="whatsapp-float" href="https://wa.me/918555096523" target="_blank" aria-label="Contact on WhatsApp">💬</a>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL="https://veuqbplcoluipkomhxhy.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_OmVrbiyJYFU1E5jRfSv3MQ_kp48VCYP";
+const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+
+function toggleMenu(){document.getElementById("mainNav").classList.toggle("active");}
+document.querySelectorAll("#mainNav a").forEach(function(link){link.addEventListener("click",function(){document.getElementById("mainNav").classList.remove("active");});});
+
+function escapeHtml(value){return String(value??"").replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c];});}
+
+function copyUPI(){
+  const upi="8555096523@ptsbi";
+  navigator.clipboard?.writeText(upi).then(function(){alert("✅ UPI ID copied successfully!");}).catch(function(){alert("UPI ID: "+upi);});
+}
+
+document.querySelectorAll(".purpose-card").forEach(function(card){
+  card.addEventListener("click",function(){
+    document.querySelectorAll(".purpose-card").forEach(function(c){c.classList.remove("selected");});
+    card.classList.add("selected");
+    document.getElementById("purpose").value=card.dataset.purpose;
+  });
+});
+
+document.querySelectorAll(".amount-buttons button").forEach(function(button){
+  button.addEventListener("click",function(){
+    document.getElementById("amount").value=button.dataset.amount;
+    document.querySelectorAll(".amount-buttons button").forEach(function(b){b.classList.remove("selected");});
+    button.classList.add("selected");
+    document.getElementById("amount").scrollIntoView({behavior:"smooth",block:"center"});
+  });
+});
+
+function buildUpiLink(){
+  const amount=Number(document.getElementById("amount").value);
+  const params=new URLSearchParams({pa:"8555096523@ptsbi",pn:"Sri Ganapathi Seva Samithi",cu:"INR"});
+  if(amount>0)params.set("am",amount.toFixed(2));
+  return "upi://pay?"+params.toString();
+}
+
+document.getElementById("payUpiButton").addEventListener("click",function(){
+  const amount=Number(document.getElementById("amount").value);
+  const donorName=document.getElementById("donorName").value.trim();
+  const message=document.getElementById("upiPayMessage");
+  if(!donorName||!amount||amount<=0){message.textContent="Please enter your name and donation amount first.";if(!donorName)document.getElementById("donorName").focus();else document.getElementById("amount").focus();return;}
+  message.textContent="Opening your UPI app...";
+  window.location.href=buildUpiLink();
+});
+
+function createReceiptNumber(){return "GP-"+new Date().getFullYear()+"-"+String(Date.now()).slice(-8);}
+
+function showReceipt(data){
+  const area=document.getElementById("receiptArea");area.hidden=false;
+  area.innerHTML='<div class="receipt"><div class="receipt-head"><div><span>🙏 SRI GANAPATHI SEVA SAMITHI</span><h3>Digital Donation Receipt</h3><small>Vanjiri, Telangana 504296</small></div><strong>'+escapeHtml(data.receipt_number)+'</strong></div><div class="receipt-grid"><div><span>Donor</span><strong>'+escapeHtml(data.donor_name)+'</strong></div><div><span>Amount</span><strong>₹'+Number(data.amount).toFixed(2)+'</strong></div><div><span>Purpose</span><strong>'+escapeHtml(data.purpose||"General Donation")+'</strong></div><div><span>UTR / Transaction ID</span><strong>'+escapeHtml(data.utr)+'</strong></div><div><span>Date</span><strong>'+escapeHtml(new Date(data.created_at).toLocaleString("en-IN"))+'</strong></div><div><span>Status</span><strong>Submitted — pending verification</strong></div></div><p class="receipt-note">Thank you for supporting Sri Ganapathi Seva Samithi. This receipt records the details submitted by the donor; it is not independent confirmation of bank settlement.</p><button type="button" class="btn btn-primary" onclick="window.print()">🖨️ Print / Save Receipt</button></div>';
+  area.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+document.getElementById("donationForm").addEventListener("submit",async function(event){
+  event.preventDefault();
+  const message=document.getElementById("donationMessage"),submit=document.getElementById("submitDonation");
+  message.textContent="";submit.disabled=true;submit.textContent="Saving donation...";
+  const donorName=document.getElementById("donorName").value.trim(),mobile=document.getElementById("mobile").value.trim(),amount=Number(document.getElementById("amount").value),purpose=document.getElementById("purpose").value,utr=document.getElementById("utr").value.trim();
+  if(!donorName||!amount||amount<=0||!utr){message.textContent="Please complete the required fields.";submit.disabled=false;submit.textContent="🧾 Generate Digital Receipt";return;}
+  const receiptNumber=createReceiptNumber();
+  const result=await supabaseClient.from("donations").insert({receipt_number:receiptNumber,donor_name:donorName,mobile:mobile||null,amount:amount,purpose:purpose,utr:utr,payment_status:"pending"}).select("receipt_number, donor_name, amount, purpose, utr, payment_status, created_at").single();
+  if(result.error){console.error("Donation insert:",result.error);message.textContent="❌ Could not save the donation. Please try again.";submit.disabled=false;submit.textContent="🧾 Generate Digital Receipt";return;}
+  showReceipt(result.data);this.reset();document.querySelectorAll(".purpose-card").forEach(function(c){c.classList.remove("selected");});document.querySelector('.purpose-card[data-purpose="Temple Development"]').classList.add("selected");message.textContent="✅ Donation details saved successfully.";submit.disabled=false;submit.textContent="🧾 Generate Digital Receipt";
+});
+</script>
+</body>
+</html>
