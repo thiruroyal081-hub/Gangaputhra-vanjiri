@@ -126,6 +126,30 @@
   </div>
 </section>
 
+<section class="smart-dashboard">
+  <div class="container">
+    <div class="smart-heading">
+      <span>SMART TEMPLE DASHBOARD</span>
+      <h2>Donation progress & transparency</h2>
+      <p>Verified donations are summarized automatically from the temple donation records.</p>
+    </div>
+    <div class="goal-card">
+      <div><span class="smart-label">TEMPLE DEVELOPMENT GOAL</span><h3>Building a stronger temple together</h3><p id="goalText">Loading verified contribution progress...</p></div>
+      <div class="goal-number" id="goalPercent">—</div>
+      <div class="goal-track"><span id="goalBar"></span></div>
+    </div>
+    <div class="smart-stats">
+      <div><span>💰</span><small>VERIFIED TOTAL</small><strong id="verifiedTotal">₹0</strong></div>
+      <div><span>🙏</span><small>VERIFIED DONATIONS</small><strong id="verifiedCount">0</strong></div>
+      <div><span>🛕</span><small>ACTIVE PURPOSES</small><strong id="purposeCount">0</strong></div>
+    </div>
+    <div class="smart-breakdown">
+      <div><div class="smart-subhead"><span>Purpose breakdown</span><button type="button" id="refreshDashboard">↻ Refresh</button></div><div id="purposeBreakdown" class="breakdown-list"><p>Loading...</p></div></div>
+      <div class="smart-live"><span>● LIVE</span><strong>Transparent donation tracking</strong><p>Only donations marked <b>verified</b> by the committee are included in these public totals.</p></div>
+    </div>
+  </div>
+</section>
+
 <section class="donate-how">
   <div class="container">
     <div class="donate-section-heading center">
@@ -162,7 +186,7 @@
 
 <a class="whatsapp-float" href="https://wa.me/918555096523" target="_blank" aria-label="Contact on WhatsApp">💬</a>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>\n<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script>
 const SUPABASE_URL="https://veuqbplcoluipkomhxhy.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY="sb_publishable_OmVrbiyJYFU1E5jRfSv3MQ_kp48VCYP";
@@ -213,10 +237,32 @@ document.getElementById("payUpiButton").addEventListener("click",function(){
 
 function createReceiptNumber(){return "GP-"+new Date().getFullYear()+"-"+String(Date.now()).slice(-8);}
 
-function showReceipt(data){
+function loadSmartDashboard(){
+  const GOAL_AMOUNT=500000;
+  const totalEl=document.getElementById("verifiedTotal"),countEl=document.getElementById("verifiedCount"),purposeEl=document.getElementById("purposeCount"),bar=document.getElementById("goalBar"),percent=document.getElementById("goalPercent"),goalText=document.getElementById("goalText"),breakdown=document.getElementById("purposeBreakdown");
+  if(!totalEl)return;
+  supabaseClient.from("donations").select("amount,purpose").eq("payment_status","verified").then(function(result){
+    if(result.error){breakdown.innerHTML="<p>Dashboard data could not be loaded right now.</p>";return;}
+    const rows=result.data||[], total=rows.reduce((sum,row)=>sum+Number(row.amount||0),0), groups={};
+    rows.forEach(function(row){const key=row.purpose||"General Donation";groups[key]=(groups[key]||0)+Number(row.amount||0);});
+    const pct=Math.min(100,(total/GOAL_AMOUNT)*100);
+    totalEl.textContent="₹"+total.toLocaleString("en-IN",{maximumFractionDigits:0});
+    countEl.textContent=rows.length.toLocaleString("en-IN");
+    purposeEl.textContent=Object.keys(groups).length;
+    percent.textContent=pct.toFixed(0)+"%";
+    bar.style.width=pct+"%";
+    goalText.textContent="₹"+total.toLocaleString("en-IN")+" verified of ₹"+GOAL_AMOUNT.toLocaleString("en-IN")+" goal";
+    const sorted=Object.entries(groups).sort(function(a,b){return b[1]-a[1];});
+    breakdown.innerHTML=sorted.length?sorted.map(function(item){const share=total?Math.round(item[1]/total*100):0;return '<div class="breakdown-row"><span>'+escapeHtml(item[0])+'</span><strong>₹'+item[1].toLocaleString("en-IN")+'</strong><small>'+share+'%</small></div>';}).join(""):"<p>No verified donations yet.</p>";
+  });
+}
+document.getElementById("refreshDashboard")?.addEventListener("click",loadSmartDashboard);
+loadSmartDashboard();
+
+
   const area=document.getElementById("receiptArea");area.hidden=false;
-  area.innerHTML='<div class="receipt"><div class="receipt-head"><div><span>🙏 SRI GANAPATHI SEVA SAMITHI</span><h3>Digital Donation Receipt</h3><small>Vanjiri, Telangana 504296</small></div><strong>'+escapeHtml(data.receipt_number)+'</strong></div><div class="receipt-grid"><div><span>Donor</span><strong>'+escapeHtml(data.donor_name)+'</strong></div><div><span>Amount</span><strong>₹'+Number(data.amount).toFixed(2)+'</strong></div><div><span>Purpose</span><strong>'+escapeHtml(data.purpose||"General Donation")+'</strong></div><div><span>UTR / Transaction ID</span><strong>'+escapeHtml(data.utr)+'</strong></div><div><span>Date</span><strong>'+escapeHtml(new Date(data.created_at).toLocaleString("en-IN"))+'</strong></div><div><span>Status</span><strong>Submitted — pending verification</strong></div></div><p class="receipt-note">Thank you for supporting Sri Ganapathi Seva Samithi. This receipt records the details submitted by the donor; it is not independent confirmation of bank settlement.</p><button type="button" class="btn btn-primary" onclick="window.print()">🖨️ Print / Save Receipt</button></div>';
-  area.scrollIntoView({behavior:"smooth",block:"start"});
+  area.innerHTML='<div class="receipt"><div class="receipt-head"><div><span>🙏 SRI GANAPATHI SEVA SAMITHI</span><h3>Digital Donation Receipt</h3><small>Vanjiri, Telangana 504296</small></div><strong>'+escapeHtml(data.receipt_number)+'</strong></div><div class="receipt-grid"><div><span>Donor</span><strong>'+escapeHtml(data.donor_name)+'</strong></div><div><span>Amount</span><strong>₹'+Number(data.amount).toFixed(2)+'</strong></div><div><span>Purpose</span><strong>'+escapeHtml(data.purpose||"General Donation")+'</strong></div><div><span>UTR / Transaction ID</span><strong>'+escapeHtml(data.utr)+'</strong></div><div><span>Date</span><strong>'+escapeHtml(new Date(data.created_at).toLocaleString("en-IN"))+'</strong></div><div><span>Status</span><strong>Submitted — pending verification</strong></div></div><div class="receipt-qr-wrap"><div id="receiptQr"></div><small>Scan to view receipt details</small></div><p class="receipt-note">Thank you for supporting Sri Ganapathi Seva Samithi. This receipt records the details submitted by the donor; it is not independent confirmation of bank settlement.</p><button type="button" class="btn btn-primary" onclick="window.print()">🖨️ Print / Save Receipt</button></div>';
+  area.scrollIntoView({behavior:"smooth",block:"start"});\n  const qr=document.getElementById("receiptQr"); if(qr){qr.innerHTML=""; new QRCode(qr,{text:"Receipt: "+data.receipt_number+" | Amount: ₹"+Number(data.amount).toFixed(2)+" | UTR: "+data.utr+" | Status: Pending verification",width:110,height:110});}
 }
 
 document.getElementById("donationForm").addEventListener("submit",async function(event){
