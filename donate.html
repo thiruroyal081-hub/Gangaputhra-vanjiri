@@ -107,19 +107,13 @@
             <option value="General Donation">General Donation</option>
           </select>
 
-          <div class="upi-pay-box">
-            <div class="donate-upi-label">UPI ID</div>
+          
             <button type="button" class="donate-upi-copy" onclick="copyUPI()"><strong>8555096523@ptsbi</strong><span>📋 Tap to copy</span></button>
             <button type="button" id="payUpiButton" class="btn btn-primary upi-direct-button">📱 Pay with UPI App</button>
             <p id="upiPayMessage" class="upi-pay-message">Enter your name and amount, then open your UPI app.</p>
           </div>
 
-          <label for="utr">UTR / Transaction ID *</label>
-          <input id="utr" type="text" required maxlength="100" placeholder="Enter UTR after payment">
-
-          <button type="submit" id="submitDonation" class="btn donation-submit">🧾 Generate Digital Receipt</button>
-          <p class="payment-note">Your submission is recorded as pending until the committee verifies the UTR.</p>
-          <p id="donationMessage" class="donation-message" role="status"></p>
+          <a class="btn btn-primary" href="https://wa.me/918555096523" target="_blank">💬 Contact on WhatsApp</a>
         </form>
       </div>
     </div>
@@ -179,12 +173,12 @@
   <div class="container footer-grid">
     <div><div class="footer-logo">ॐ Sri Ganapathi Seva Samithi</div><p>శ్రీ గణపతి సేవా సమితి</p><small>Vanjiri, Telangana 504296</small></div>
     <div><h4>Quick Links</h4><a href="index.html">Home</a><a href="temple.html">Temple</a><a href="gallery.html">Gallery</a><a href="donate.html">Donate</a></div>
-    <div><h4>Contact</h4><a href="tel:+918555096524">8555096524</a><a href="https://wa.me/918555096524" target="_blank">WhatsApp</a></div>
+    <div><h4>Contact</h4><a href="tel:+918555096523">8555096523</a><a href="https://wa.me/918555096523" target="_blank">WhatsApp</a></div>
   </div>
   <div class="footer-bottom"><p>© 2026 Sri Ganapathi Seva Samithi. All rights reserved.</p></div>
 </footer>
 
-<a class="whatsapp-float" href="https://wa.me/918555096524" target="_blank" aria-label="Contact on WhatsApp">💬</a>
+<a class="whatsapp-float" href="https://wa.me/918555096523" target="_blank" aria-label="Contact on WhatsApp">💬</a>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>\n<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script>
@@ -196,11 +190,6 @@ function toggleMenu(){document.getElementById("mainNav").classList.toggle("activ
 document.querySelectorAll("#mainNav a").forEach(function(link){link.addEventListener("click",function(){document.getElementById("mainNav").classList.remove("active");});});
 
 function escapeHtml(value){return String(value??"").replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c];});}
-
-function copyUPI(){
-  const upi="8555096523@ptsbi";
-  navigator.clipboard?.writeText(upi).then(function(){alert("✅ UPI ID copied successfully!");}).catch(function(){alert("UPI ID: "+upi);});
-}
 
 document.querySelectorAll(".purpose-card").forEach(function(card){
   card.addEventListener("click",function(){
@@ -217,22 +206,6 @@ document.querySelectorAll(".amount-buttons button").forEach(function(button){
     button.classList.add("selected");
     document.getElementById("amount").scrollIntoView({behavior:"smooth",block:"center"});
   });
-});
-
-function buildUpiLink(){
-  const amount=Number(document.getElementById("amount").value);
-  const params=new URLSearchParams({pa:"8555096523@ptsbi",pn:"Sri Ganapathi Seva Samithi",cu:"INR"});
-  if(amount>0)params.set("am",amount.toFixed(2));
-  return "upi://pay?"+params.toString();
-}
-
-document.getElementById("payUpiButton").addEventListener("click",function(){
-  const amount=Number(document.getElementById("amount").value);
-  const donorName=document.getElementById("donorName").value.trim();
-  const message=document.getElementById("upiPayMessage");
-  if(!donorName||!amount||amount<=0){message.textContent="Please enter your name and donation amount first.";if(!donorName)document.getElementById("donorName").focus();else document.getElementById("amount").focus();return;}
-  message.textContent="Opening your UPI app...";
-  window.location.href=buildUpiLink();
 });
 
 function createReceiptNumber(){return "GP-"+new Date().getFullYear()+"-"+String(Date.now()).slice(-8);}
@@ -265,17 +238,6 @@ loadSmartDashboard();
   area.scrollIntoView({behavior:"smooth",block:"start"});\n  const qr=document.getElementById("receiptQr"); if(qr){qr.innerHTML=""; new QRCode(qr,{text:"Receipt: "+data.receipt_number+" | Amount: ₹"+Number(data.amount).toFixed(2)+" | UTR: "+data.utr+" | Status: Pending verification",width:110,height:110});}
 }
 
-document.getElementById("donationForm").addEventListener("submit",async function(event){
-  event.preventDefault();
-  const message=document.getElementById("donationMessage"),submit=document.getElementById("submitDonation");
-  message.textContent="";submit.disabled=true;submit.textContent="Saving donation...";
-  const donorName=document.getElementById("donorName").value.trim(),mobile=document.getElementById("mobile").value.trim(),amount=Number(document.getElementById("amount").value),purpose=document.getElementById("purpose").value,utr=document.getElementById("utr").value.trim();
-  if(!donorName||!amount||amount<=0||!utr){message.textContent="Please complete the required fields.";submit.disabled=false;submit.textContent="🧾 Generate Digital Receipt";return;}
-  const receiptNumber=createReceiptNumber();
-  const result=await supabaseClient.from("donations").insert({receipt_number:receiptNumber,donor_name:donorName,mobile:mobile||null,amount:amount,purpose:purpose,utr:utr,payment_status:"pending"}).select("receipt_number, donor_name, amount, purpose, utr, payment_status, created_at").single();
-  if(result.error){console.error("Donation insert:",result.error);message.textContent="❌ Could not save the donation. Please try again.";submit.disabled=false;submit.textContent="🧾 Generate Digital Receipt";return;}
-  showReceipt(result.data);this.reset();document.querySelectorAll(".purpose-card").forEach(function(c){c.classList.remove("selected");});document.querySelector('.purpose-card[data-purpose="Temple Development"]').classList.add("selected");message.textContent="✅ Donation details saved successfully.";submit.disabled=false;submit.textContent="🧾 Generate Digital Receipt";
-});
 </script>
 </body>
 </html>
