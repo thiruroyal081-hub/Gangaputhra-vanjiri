@@ -517,14 +517,133 @@
 </section>
 
 <!-- ================= DONATION ================= -->
-<section class="donation-section donation-contact-only">
-  <div class="container donation-contact-card">
-    <span class="donation-label">🙏 SUPPORT TEMPLE</span>
-    <h2>Support Sri Ganapathi Seva Samithi</h2>
-    <p>For donation information, please contact the Seva Samithi directly.</p>
-    <a class="btn btn-primary" href="https://wa.me/918555096523" target="_blank">💬 WhatsApp: 8555096523</a>
+<section id="donate" class="donation-section">
+
+  <div class="container donation-grid">
+
+    <div class="donation-content">
+      <span class="donation-label">🙏 SUPPORT TEMPLE</span>
+
+      <h2>Every contribution<br>helps our temple.</h2>
+
+      <p>
+        మీ చిన్న సహాయం కూడా మన దేవాలయ అభివృద్ధికి ఎంతో ఉపయోగపడుతుంది.
+      </p>
+
+      <div class="upi-box">
+        <span>UPI ID</span>
+        <button type="button" class="upi-id-copy" onclick="copyUPI()" aria-label="Copy UPI ID">
+          <strong id="upiId">8555096523@ptsbi</strong>
+          <span>📋 Tap to copy UPI ID</span>
+        </button>
+      </div>
+
+      <p id="copyMessage" class="copy-message"></p>
+
+      <div class="donation-help">
+        <strong>How it works</strong>
+        <ol>
+          <li>Enter your name and donation amount.</li>
+          <li>Pay using the UPI button below.</li>
+          <li>Enter the UTR/transaction ID after payment.</li>
+          <li>Submit the details to generate your digital receipt.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="donation-card donation-form-card">
+      <div class="donation-icon">🙏</div>
+      <h3>Temple Donation</h3>
+      <p>Pay through UPI and submit your transaction details.</p>
+
+      <form id="donationForm" class="donation-form">
+        <label for="donorName">Donor name *</label>
+        <input id="donorName" name="donorName" type="text" required maxlength="100" placeholder="Enter your name">
+
+        <label for="mobile">Mobile number</label>
+        <input id="mobile" name="mobile" type="tel" inputmode="numeric" maxlength="15" placeholder="Enter mobile number">
+
+        <label for="amount">Donation amount (₹) *</label>
+        <input id="amount" name="amount" type="number" min="1" max="1000000" step="0.01" required placeholder="e.g. 500">
+
+        <label for="purpose">Purpose</label>
+        <select id="purpose" name="purpose">
+          <option value="Temple Development">Temple Development</option>
+          <option value="Daily Pooja">Daily Pooja</option>
+          <option value="Ganesh Utsavam">Ganesh Utsavam</option>
+          <option value="Community Seva">Community Seva</option>
+          <option value="General Donation">General Donation</option>
+        </select>
+
+        <div class="upi-pay-box">
+  <button type="button" id="payUpiButton" class="btn btn-primary upi-direct-button">📱 Pay with UPI App</button>
+  <button type="button" class="btn btn-outline upi-copy-main" onclick="copyUPI()">📋 Copy UPI ID</button>
+  <p id="upiPayMessage" class="upi-pay-message">
+    Enter your amount, then use the button to open your UPI app. After payment, enter the UTR / Transaction ID below.
+  </p>
+</div>
+
+        <label for="utr">UTR / Transaction ID *</label>
+        <input id="utr" name="utr" type="text" required maxlength="100" placeholder="Enter UTR after payment">
+
+        <button type="submit" id="submitDonation" class="btn donation-submit">🧾 Generate Digital Receipt</button>
+
+        <p class="payment-note">
+          Payment status is recorded as submitted/pending until the committee verifies the UTR.
+        </p>
+        <p id="donationMessage" class="donation-message" role="status"></p>
+      </form>
+    </div>
+
+  </div>
+
+  
+
+<section id="admin" class="admin-section">
+  <div class="admin-inner">
+    <div class="history-heading">
+      <div>
+        <span>🔐 ADMIN</span>
+        <h2>Donation Verification</h2>
+      </div>
+    </div>
+    <div id="adminLogin" class="admin-card">
+      <h3>Administrator Login</h3>
+      <p>Enter the admin password to review pending donations.</p>
+      <input id="adminPassword" type="password" placeholder="Admin password">
+      <button type="button" class="btn btn-primary" id="adminLoginButton">🔐 Login</button>
+      <div id="adminLoginMessage" class="admin-message"></div>
+    </div>
+    <div id="adminPanel" class="admin-card" hidden>
+      <div class="admin-panel-head">
+        <h3>Pending Donations</h3>
+        <button type="button" class="btn btn-outline" id="adminRefreshButton">↻ Refresh</button>
+      </div>
+      <div id="adminDonationList"><div class="history-empty">Loading...</div></div>
+      <button type="button" class="btn btn-outline" id="adminLogoutButton">Logout</button>
+    </div>
   </div>
 </section>
+
+<section id="donationHistory" class="donation-history">
+  <div class="history-inner">
+    <div class="history-heading">
+      <div>
+        <span>🙏 DONATION HISTORY</span>
+        <h2>Recent Successful Donations</h2>
+      </div>
+      <div id="historyTotal" class="history-total">Verified donations: ₹0</div>
+    </div>
+    <p class="history-note">Only donations verified by the committee are shown here. UTR numbers and mobile numbers are kept private.</p>
+    <div id="historyList" class="history-list">
+      <div class="history-empty">Loading verified donations...</div>
+    </div>
+  </div>
+</section>
+
+<div id="receiptArea" class="receipt-area" hidden></div>
+</section>
+
 
 <!-- ================= CONTACT ================= -->
 <section id="contact" class="section">
@@ -735,6 +854,21 @@ document.querySelectorAll("#mainNav a").forEach(function(link) {
   });
 });
 
+function copyUPI() {
+  const upi = "8555096523@ptsbi";
+  const msg = document.getElementById("copyMessage");
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(upi).then(function() {
+      msg.textContent = "✅ UPI ID copied successfully!";
+    }).catch(function() {
+      msg.textContent = "Please copy the UPI ID manually: " + upi;
+    });
+  } else {
+    msg.textContent = "Please copy the UPI ID manually: " + upi;
+  }
+  setTimeout(function() { msg.textContent = ""; }, 3500);
+}
+
 document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
   anchor.addEventListener("click", function(e) {
     const target = document.querySelector(this.getAttribute("href"));
@@ -744,6 +878,60 @@ document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
     }
   });
 });
+
+function buildUpiLink() {
+  const amount = Number(document.getElementById("amount").value);
+  const params = new URLSearchParams({
+    pa: "8555096523@ptsbi",
+    pn: "Sri Ganapathi Seva Samithi",
+    cu: "INR"
+  });
+  if (amount > 0) params.set("am", amount.toFixed(2));
+  return "upi://pay?" + params.toString();
+}
+
+document.getElementById("payUpiButton").addEventListener("click", function() {
+  const amount = Number(document.getElementById("amount").value);
+  const donorName = document.getElementById("donorName").value.trim();
+  const message = document.getElementById("upiPayMessage");
+
+  if (!donorName || !amount || amount <= 0) {
+    message.textContent = "Please enter your name and donation amount first.";
+    if (!donorName) document.getElementById("donorName").focus();
+    else document.getElementById("amount").focus();
+    return;
+  }
+
+  message.textContent = "Opening your UPI app...";
+  window.location.href = buildUpiLink();
+});
+
+function createReceiptNumber() {
+  return "GP-" + new Date().getFullYear() + "-" + String(Date.now()).slice(-8);
+}
+
+function showReceipt(data) {
+  const area = document.getElementById("receiptArea");
+  area.hidden = false;
+  area.innerHTML = '<div class="receipt">' +
+    '<div class="receipt-head"><div>' +
+    '<span>🙏 SRI GANAPATHI SEVA SAMITHI</span>' +
+    '<h3>Digital Donation Receipt</h3>' +
+    '<small>Vanjiri, Telangana 504296</small>' +
+    '</div><strong>' + escapeHtml(data.receipt_number) + '</strong></div>' +
+    '<div class="receipt-grid">' +
+    '<div><span>Donor</span><strong>' + escapeHtml(data.donor_name) + '</strong></div>' +
+    '<div><span>Amount</span><strong>₹' + Number(data.amount).toFixed(2) + '</strong></div>' +
+    '<div><span>Purpose</span><strong>' + escapeHtml(data.purpose || "General Donation") + '</strong></div>' +
+    '<div><span>UTR / Transaction ID</span><strong>' + escapeHtml(data.utr) + '</strong></div>' +
+    '<div><span>Date</span><strong>' + escapeHtml(new Date(data.created_at).toLocaleString("en-IN")) + '</strong></div>' +
+    '<div><span>Status</span><strong>Submitted — pending verification</strong></div>' +
+    '</div>' +
+    '<p class="receipt-note">Thank you for supporting Sri Ganapathi Seva Samithi. This receipt records the details submitted by the donor; it is not independent confirmation of bank settlement.</p>' +
+    '<button type="button" class="btn btn-primary" onclick="window.print()">🖨️ Print / Save Receipt</button>' +
+    '</div>';
+  area.scrollIntoView({behavior:"smooth", block:"start"});
+}
 
 async function loadVerifiedDonationHistory() {
   const list = document.getElementById("historyList");
@@ -864,6 +1052,54 @@ document.getElementById("adminLogoutButton").addEventListener("click",function()
   document.getElementById("adminPanel").hidden=true;
   document.getElementById("adminLogin").hidden=false;
   document.getElementById("adminPassword").value="";
+});
+
+document.getElementById("donationForm").addEventListener("submit",async function(event){
+  event.preventDefault();
+
+  const message=document.getElementById("donationMessage");
+  const submit=document.getElementById("submitDonation");
+  message.textContent="";
+  submit.disabled=true;
+  submit.textContent="Saving donation...";
+
+  const donorName=document.getElementById("donorName").value.trim();
+  const mobile=document.getElementById("mobile").value.trim();
+  const amount=Number(document.getElementById("amount").value);
+  const purpose=document.getElementById("purpose").value;
+  const utr=document.getElementById("utr").value.trim();
+
+  if(!donorName || !amount || amount<=0 || !utr){
+    message.textContent="Please complete the required fields.";
+    submit.disabled=false;
+    submit.textContent="🧾 Generate Digital Receipt";
+    return;
+  }
+
+  const receiptNumber=createReceiptNumber();
+  const result=await supabaseClient.from("donations").insert({
+    receipt_number:receiptNumber,
+    donor_name:donorName,
+    mobile:mobile||null,
+    amount:amount,
+    purpose:purpose,
+    utr:utr,
+    payment_status:"pending"
+  }).select("receipt_number, donor_name, amount, purpose, utr, payment_status, created_at").single();
+
+  if(result.error){
+    console.error("Donation insert:",result.error);
+    message.textContent="❌ Could not save the donation. Please try again.";
+    submit.disabled=false;
+    submit.textContent="🧾 Generate Digital Receipt";
+    return;
+  }
+
+  showReceipt(result.data);
+  this.reset();
+  message.textContent="✅ Donation details saved successfully.";
+  submit.disabled=false;
+  submit.textContent="🧾 Generate Digital Receipt";
 });
 
 loadVerifiedDonationHistory();
