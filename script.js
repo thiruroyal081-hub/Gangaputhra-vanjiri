@@ -80,3 +80,17 @@
     renderDailyContent();
   }, 1000);
 })();
+
+
+// Separate inner pages
+document.querySelectorAll('#mainNav a').forEach(function(link){
+  const target=link.getAttribute('href');
+  const pages={
+    '#about':'about.html',
+    '#temple':'temple.html',
+    '#history':'history.html',
+    '#updates':'updates.html',
+    '#contact':'contact.html'
+  };
+  if(pages[target]) link.setAttribute('href',pages[target]);
+});
