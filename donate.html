@@ -56,13 +56,72 @@
   </div>
 </section>
 
-<section class="donation-portal donation-contact-only">
+<section class="donation-portal">
   <div class="container">
-    <div class="donation-contact-card">
-      <span class="donation-label">🙏 SUPPORT OUR TEMPLE</span>
-      <h2>For Donation Information</h2>
-      <p>Please contact Sri Ganapathi Seva Samithi directly for donation details and support.</p>
-      <a class="btn btn-primary" href="https://wa.me/918555096523" target="_blank">💬 WhatsApp: 8555096523</a>
+    <div class="donation-portal-grid">
+      <div>
+        <div class="donate-section-heading">
+          <span>1 · CHOOSE YOUR SEVA</span>
+          <h2>Where would you like to contribute?</h2>
+        </div>
+        <div class="purpose-grid">
+          <button type="button" class="purpose-card selected" data-purpose="Temple Development"><span>🛕</span><strong>Temple Development</strong><small>Support temple construction and maintenance.</small></button>
+          <button type="button" class="purpose-card" data-purpose="Annadanam"><span>🍚</span><strong>Annadanam</strong><small>Support community food service.</small></button>
+          <button type="button" class="purpose-card" data-purpose="Daily Pooja"><span>🪔</span><strong>Daily Pooja</strong><small>Support regular worship and aarti.</small></button>
+          <button type="button" class="purpose-card" data-purpose="Ganesh Utsavam"><span>🎉</span><strong>Ganesh Utsavam</strong><small>Support festival celebrations and programs.</small></button>
+        </div>
+
+        <div class="donate-section-heading amount-heading">
+          <span>2 · SELECT AMOUNT</span>
+          <h2>Choose a contribution</h2>
+        </div>
+        <div class="amount-buttons">
+          <button type="button" data-amount="501">₹501</button>
+          <button type="button" data-amount="1001">₹1,001</button>
+          <button type="button" data-amount="2501">₹2,501</button>
+          <button type="button" data-amount="5001">₹5,001</button>
+        </div>
+      </div>
+
+      <div class="donation-card donation-form-card donation-portal-card">
+        <div class="donation-icon">🙏</div>
+        <h3>Temple Donation</h3>
+        <p>Complete your details, pay by UPI, then enter the UTR.</p>
+        <form id="donationForm" class="donation-form">
+          <label for="donorName">Donor name *</label>
+          <input id="donorName" type="text" required maxlength="100" placeholder="Enter your full name">
+
+          <label for="mobile">Mobile number</label>
+          <input id="mobile" type="tel" inputmode="numeric" maxlength="15" placeholder="Enter mobile number">
+
+          <label for="amount">Donation amount (₹) *</label>
+          <input id="amount" type="number" min="1" max="1000000" step="0.01" required placeholder="e.g. 1001">
+
+          <label for="purpose">Purpose</label>
+          <select id="purpose">
+            <option value="Temple Development">Temple Development</option>
+            <option value="Annadanam">Annadanam</option>
+            <option value="Daily Pooja">Daily Pooja</option>
+            <option value="Ganesh Utsavam">Ganesh Utsavam</option>
+            <option value="Community Seva">Community Seva</option>
+            <option value="General Donation">General Donation</option>
+          </select>
+
+          <div class="upi-pay-box">
+            <div class="donate-upi-label">UPI ID</div>
+            <button type="button" class="donate-upi-copy" onclick="copyUPI()"><strong>8555096523@ptsbi</strong><span>📋 Tap to copy</span></button>
+            <button type="button" id="payUpiButton" class="btn btn-primary upi-direct-button">📱 Pay with UPI App</button>
+            <p id="upiPayMessage" class="upi-pay-message">Enter your name and amount, then open your UPI app.</p>
+          </div>
+
+          <label for="utr">UTR / Transaction ID *</label>
+          <input id="utr" type="text" required maxlength="100" placeholder="Enter UTR after payment">
+
+          <button type="submit" id="submitDonation" class="btn donation-submit">🧾 Generate Digital Receipt</button>
+          <p class="payment-note">Your submission is recorded as pending until the committee verifies the UTR.</p>
+          <p id="donationMessage" class="donation-message" role="status"></p>
+        </form>
+      </div>
     </div>
   </div>
 </section>
@@ -113,6 +172,7 @@
   </div>
 </section>
 
+<div id="receiptArea" class="receipt-area" hidden></div>
 </main>
 
 <footer class="footer">
@@ -131,27 +191,91 @@
 const SUPABASE_URL="https://veuqbplcoluipkomhxhy.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY="sb_publishable_OmVrbiyJYFU1E5jRfSv3MQ_kp48VCYP";
 const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+
 function toggleMenu(){document.getElementById("mainNav").classList.toggle("active");}
 document.querySelectorAll("#mainNav a").forEach(function(link){link.addEventListener("click",function(){document.getElementById("mainNav").classList.remove("active");});});
+
+function escapeHtml(value){return String(value??"").replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c];});}
+
+function copyUPI(){
+  const upi="8555096523@ptsbi";
+  navigator.clipboard?.writeText(upi).then(function(){alert("✅ UPI ID copied successfully!");}).catch(function(){alert("UPI ID: "+upi);});
+}
+
+document.querySelectorAll(".purpose-card").forEach(function(card){
+  card.addEventListener("click",function(){
+    document.querySelectorAll(".purpose-card").forEach(function(c){c.classList.remove("selected");});
+    card.classList.add("selected");
+    document.getElementById("purpose").value=card.dataset.purpose;
+  });
+});
+
+document.querySelectorAll(".amount-buttons button").forEach(function(button){
+  button.addEventListener("click",function(){
+    document.getElementById("amount").value=button.dataset.amount;
+    document.querySelectorAll(".amount-buttons button").forEach(function(b){b.classList.remove("selected");});
+    button.classList.add("selected");
+    document.getElementById("amount").scrollIntoView({behavior:"smooth",block:"center"});
+  });
+});
+
+function buildUpiLink(){
+  const amount=Number(document.getElementById("amount").value);
+  const params=new URLSearchParams({pa:"8555096523@ptsbi",pn:"Sri Ganapathi Seva Samithi",cu:"INR"});
+  if(amount>0)params.set("am",amount.toFixed(2));
+  return "upi://pay?"+params.toString();
+}
+
+document.getElementById("payUpiButton").addEventListener("click",function(){
+  const amount=Number(document.getElementById("amount").value);
+  const donorName=document.getElementById("donorName").value.trim();
+  const message=document.getElementById("upiPayMessage");
+  if(!donorName||!amount||amount<=0){message.textContent="Please enter your name and donation amount first.";if(!donorName)document.getElementById("donorName").focus();else document.getElementById("amount").focus();return;}
+  message.textContent="Opening your UPI app...";
+  window.location.href=buildUpiLink();
+});
+
+function createReceiptNumber(){return "GP-"+new Date().getFullYear()+"-"+String(Date.now()).slice(-8);}
+
 function loadSmartDashboard(){
- const totalEl=document.getElementById("verifiedTotal"),countEl=document.getElementById("verifiedCount"),purposeEl=document.getElementById("purposeCount"),bar=document.getElementById("goalBar"),percent=document.getElementById("goalPercent"),goalText=document.getElementById("goalText"),breakdown=document.getElementById("purposeBreakdown");
- if(!totalEl)return;
- supabaseClient.from("donations").select("amount,purpose").eq("payment_status","verified").then(function(result){
-  if(result.error){breakdown.innerHTML="<p>Dashboard data could not be loaded right now.</p>";return;}
-  const rows=result.data||[],total=rows.reduce((sum,row)=>sum+Number(row.amount||0),0),groups={};
-  rows.forEach(function(row){const key=row.purpose||"General Donation";groups[key]=(groups[key]||0)+Number(row.amount||0);});
-  const goal=500000,pct=Math.min(100,total/goal*100);
-  totalEl.textContent="₹"+total.toLocaleString("en-IN",{maximumFractionDigits:0});
-  countEl.textContent=rows.length.toLocaleString("en-IN");
-  purposeEl.textContent=Object.keys(groups).length;
-  percent.textContent=pct.toFixed(0)+"%";bar.style.width=pct+"%";
-  goalText.textContent="₹"+total.toLocaleString("en-IN")+" verified of ₹"+goal.toLocaleString("en-IN")+" goal";
-  const sorted=Object.entries(groups).sort(function(a,b){return b[1]-a[1];});
-  breakdown.innerHTML=sorted.length?sorted.map(function(item){return '<div class="breakdown-row"><span>'+item[0]+'</span><strong>₹'+item[1].toLocaleString("en-IN")+'</strong><small>'+Math.round(item[1]/total*100)+'%</small></div>';}).join(""):"<p>No verified donations yet.</p>";
- });
+  const GOAL_AMOUNT=500000;
+  const totalEl=document.getElementById("verifiedTotal"),countEl=document.getElementById("verifiedCount"),purposeEl=document.getElementById("purposeCount"),bar=document.getElementById("goalBar"),percent=document.getElementById("goalPercent"),goalText=document.getElementById("goalText"),breakdown=document.getElementById("purposeBreakdown");
+  if(!totalEl)return;
+  supabaseClient.from("donations").select("amount,purpose").eq("payment_status","verified").then(function(result){
+    if(result.error){breakdown.innerHTML="<p>Dashboard data could not be loaded right now.</p>";return;}
+    const rows=result.data||[], total=rows.reduce((sum,row)=>sum+Number(row.amount||0),0), groups={};
+    rows.forEach(function(row){const key=row.purpose||"General Donation";groups[key]=(groups[key]||0)+Number(row.amount||0);});
+    const pct=Math.min(100,(total/GOAL_AMOUNT)*100);
+    totalEl.textContent="₹"+total.toLocaleString("en-IN",{maximumFractionDigits:0});
+    countEl.textContent=rows.length.toLocaleString("en-IN");
+    purposeEl.textContent=Object.keys(groups).length;
+    percent.textContent=pct.toFixed(0)+"%";
+    bar.style.width=pct+"%";
+    goalText.textContent="₹"+total.toLocaleString("en-IN")+" verified of ₹"+GOAL_AMOUNT.toLocaleString("en-IN")+" goal";
+    const sorted=Object.entries(groups).sort(function(a,b){return b[1]-a[1];});
+    breakdown.innerHTML=sorted.length?sorted.map(function(item){const share=total?Math.round(item[1]/total*100):0;return '<div class="breakdown-row"><span>'+escapeHtml(item[0])+'</span><strong>₹'+item[1].toLocaleString("en-IN")+'</strong><small>'+share+'%</small></div>';}).join(""):"<p>No verified donations yet.</p>";
+  });
 }
 document.getElementById("refreshDashboard")?.addEventListener("click",loadSmartDashboard);
 loadSmartDashboard();
+
+
+  const area=document.getElementById("receiptArea");area.hidden=false;
+  area.innerHTML='<div class="receipt"><div class="receipt-head"><div><span>🙏 SRI GANAPATHI SEVA SAMITHI</span><h3>Digital Donation Receipt</h3><small>Vanjiri, Telangana 504296</small></div><strong>'+escapeHtml(data.receipt_number)+'</strong></div><div class="receipt-grid"><div><span>Donor</span><strong>'+escapeHtml(data.donor_name)+'</strong></div><div><span>Amount</span><strong>₹'+Number(data.amount).toFixed(2)+'</strong></div><div><span>Purpose</span><strong>'+escapeHtml(data.purpose||"General Donation")+'</strong></div><div><span>UTR / Transaction ID</span><strong>'+escapeHtml(data.utr)+'</strong></div><div><span>Date</span><strong>'+escapeHtml(new Date(data.created_at).toLocaleString("en-IN"))+'</strong></div><div><span>Status</span><strong>Submitted — pending verification</strong></div></div><div class="receipt-qr-wrap"><div id="receiptQr"></div><small>Scan to view receipt details</small></div><p class="receipt-note">Thank you for supporting Sri Ganapathi Seva Samithi. This receipt records the details submitted by the donor; it is not independent confirmation of bank settlement.</p><button type="button" class="btn btn-primary" onclick="window.print()">🖨️ Print / Save Receipt</button></div>';
+  area.scrollIntoView({behavior:"smooth",block:"start"});\n  const qr=document.getElementById("receiptQr"); if(qr){qr.innerHTML=""; new QRCode(qr,{text:"Receipt: "+data.receipt_number+" | Amount: ₹"+Number(data.amount).toFixed(2)+" | UTR: "+data.utr+" | Status: Pending verification",width:110,height:110});}
+}
+
+document.getElementById("donationForm").addEventListener("submit",async function(event){
+  event.preventDefault();
+  const message=document.getElementById("donationMessage"),submit=document.getElementById("submitDonation");
+  message.textContent="";submit.disabled=true;submit.textContent="Saving donation...";
+  const donorName=document.getElementById("donorName").value.trim(),mobile=document.getElementById("mobile").value.trim(),amount=Number(document.getElementById("amount").value),purpose=document.getElementById("purpose").value,utr=document.getElementById("utr").value.trim();
+  if(!donorName||!amount||amount<=0||!utr){message.textContent="Please complete the required fields.";submit.disabled=false;submit.textContent="🧾 Generate Digital Receipt";return;}
+  const receiptNumber=createReceiptNumber();
+  const result=await supabaseClient.from("donations").insert({receipt_number:receiptNumber,donor_name:donorName,mobile:mobile||null,amount:amount,purpose:purpose,utr:utr,payment_status:"pending"}).select("receipt_number, donor_name, amount, purpose, utr, payment_status, created_at").single();
+  if(result.error){console.error("Donation insert:",result.error);message.textContent="❌ Could not save the donation. Please try again.";submit.disabled=false;submit.textContent="🧾 Generate Digital Receipt";return;}
+  showReceipt(result.data);this.reset();document.querySelectorAll(".purpose-card").forEach(function(c){c.classList.remove("selected");});document.querySelector('.purpose-card[data-purpose="Temple Development"]').classList.add("selected");message.textContent="✅ Donation details saved successfully.";submit.disabled=false;submit.textContent="🧾 Generate Digital Receipt";
+});
 </script>
 </body>
 </html>
