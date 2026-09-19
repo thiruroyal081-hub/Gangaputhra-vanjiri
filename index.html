@@ -552,9 +552,6 @@
         </select>
 
         <div class="upi-pay-box">
-  <div class="upi-qr" id="upiQr" aria-label="UPI payment QR code"></div>
-  <p class="qr-title">📱 Scan this QR code with any UPI app</p>
-  <p class="qr-upi">8555096523@ptsbi</p>
   <button type="button" id="payUpiButton" class="btn btn-primary upi-direct-button">📱 Pay with UPI App</button>
   <button type="button" class="btn btn-outline upi-copy-main" onclick="copyUPI()">📋 Copy UPI ID</button>
   <p id="upiPayMessage" class="upi-pay-message">
@@ -810,34 +807,10 @@
 
 <!-- ================= JAVASCRIPT ================= -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
 const SUPABASE_URL = "https://veuqbplcoluipkomhxhy.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_OmVrbiyJYFU1E5jRfSv3MQ_kp48VCYP";
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
-function renderUpiQr() {
-  const qrBox = document.getElementById("upiQr");
-  if (!qrBox) return;
-  const amount = Number(document.getElementById("amount").value);
-  const params = new URLSearchParams({
-    pa: "8555096523@ptsbi",
-    pn: "Sri Ganapathi Seva Samithi",
-    cu: "INR"
-  });
-  if (amount > 0) params.set("am", amount.toFixed(2));
-  qrBox.innerHTML = "";
-  new QRCode(qrBox, {
-    text: "upi://pay?" + params.toString(),
-    width: 178,
-    height: 178,
-    colorDark: "#000000",
-    colorLight: "#ffffff",
-    correctLevel: QRCode.CorrectLevel.M
-  });
-}
-renderUpiQr();
-document.getElementById("amount").addEventListener("input", renderUpiQr);
-
 const ADMIN_PASSWORD = "Vanjiri2026";
 let adminLoggedIn = false;
 
