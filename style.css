@@ -850,3 +850,14 @@ body.home-page .schedule-section{
 .donation-contact-card{max-width:760px;margin:auto;text-align:center;background:#fff;border:1px solid var(--line);border-radius:24px;padding:45px;box-shadow:0 15px 35px rgba(23,68,63,.08)}
 .donation-contact-card h2{font-family:"Playfair Display",Georgia,serif;font-size:38px;margin:8px 0 12px}.donation-contact-card p{color:var(--muted);margin-bottom:22px}
 @media(max-width:600px){.donation-contact-card{padding:30px 20px}.donation-contact-card h2{font-size:30px}}
+
+/* Compact admin login on phones */
+@media (max-width:600px){
+  .admin-section{padding:28px 12px}
+  .admin-inner{max-width:360px}
+  .admin-card{padding:18px 15px;margin-top:10px;border-radius:14px}
+  .admin-card h3{font-size:20px}
+  .admin-card p{font-size:11px}
+  .admin-card input{max-width:none;width:100%;box-sizing:border-box;padding:10px 12px;margin:8px 0}
+  .admin-card .btn{width:100%;padding:10px 14px}
+}
