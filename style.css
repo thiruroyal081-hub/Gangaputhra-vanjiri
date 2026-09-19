@@ -633,8 +633,19 @@ nav a:hover{background:var(--gold-soft);color:var(--green)}
 body.home-page #about,
 body.home-page #temple,
 body.home-page #history,
+body.home-page #pooja,
+body.home-page #utsavam,
+body.home-page #darshan,
 body.home-page #updates,
 body.home-page #contact{
+  display:none !important;
+}
+
+/* Home must show only the main landing content. Other sections appear only after clicking their page/link. */
+body.home-page .heritage-section,
+body.home-page .service-section,
+body.home-page .darshan-section,
+body.home-page .schedule-section{
   display:none !important;
 }
 
