@@ -555,10 +555,10 @@
   <div class="upi-qr" id="upiQr" aria-label="UPI payment QR code"></div>
   <p class="qr-title">📱 Scan this QR code with any UPI app</p>
   <p class="qr-upi">8555096523@ptsbi</p>
-  <button type="button" id="payUpiButton" class="btn btn-primary upi-direct-button">📱 Pay Directly with UPI App</button>
+  <button type="button" id="payUpiButton" class="btn btn-primary upi-direct-button">📱 Pay with UPI App</button>
   <button type="button" class="btn btn-outline upi-copy-main" onclick="copyUPI()">📋 Copy UPI ID</button>
   <p id="upiPayMessage" class="upi-pay-message">
-    Tap “Pay Directly with UPI App” to open your installed UPI app. The QR code below is only an alternative payment method.
+    Enter your amount, then use the button to open your UPI app. After payment, enter the UTR / Transaction ID below.
   </p>
 </div>
 
@@ -810,7 +810,6 @@
 
 <!-- ================= JAVASCRIPT ================= -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
 const SUPABASE_URL = "https://veuqbplcoluipkomhxhy.supabase.co";
@@ -894,13 +893,10 @@ function buildUpiLink() {
   return "upi://pay?" + params.toString();
 }
 
-document.getElementById("payUpiButton").addEventListener("click", async function() {
+document.getElementById("payUpiButton").addEventListener("click", function() {
   const amount = Number(document.getElementById("amount").value);
   const donorName = document.getElementById("donorName").value.trim();
-  const mobile = document.getElementById("mobile").value.trim();
-  const purpose = document.getElementById("purpose").value;
   const message = document.getElementById("upiPayMessage");
-  const button = document.getElementById("payUpiButton");
 
   if (!donorName || !amount || amount <= 0) {
     message.textContent = "Please enter your name and donation amount first.";
@@ -909,73 +905,8 @@ document.getElementById("payUpiButton").addEventListener("click", async function
     return;
   }
 
-  button.disabled = true;
-  button.textContent = "⏳ Starting secure payment...";
-  message.textContent = "Opening secure UPI payment checkout...";
-
-  try {
-    const { data: order, error } = await supabaseClient.functions.invoke("create-donation-order", {
-      body: { donor_name: donorName, mobile, amount, purpose }
-    });
-    if (error || !order) throw new Error(error?.message || "Could not create payment order");
-
-    const options = {
-      key: order.key_id,
-      amount: order.amount,
-      currency: order.currency || "INR",
-      name: "Sri Ganapathi Seva Samithi",
-      description: purpose || "Temple Donation",
-      order_id: order.order_id,
-      prefill: { name: donorName, contact: mobile },
-      notes: { receipt_number: order.receipt_number },
-      theme: { color: "#c97816" },
-      handler: async function(response) {
-        message.textContent = "⏳ Payment received. Verifying securely...";
-        const { data: verified, error: verifyError } = await supabaseClient.functions.invoke("verify-donation-payment", {
-          body: {
-            razorpay_order_id: response.razorpay_order_id,
-            razorpay_payment_id: response.razorpay_payment_id,
-            razorpay_signature: response.razorpay_signature,
-            receipt_number: order.receipt_number
-          }
-        });
-        if (verifyError || !verified?.success) {
-          message.textContent = "Payment was received but verification needs attention. Please keep your payment ID: " + response.razorpay_payment_id;
-          return;
-        }
-        showReceipt({
-          receipt_number: verified.receipt_number,
-          donor_name: verified.donor_name,
-          amount: verified.amount,
-          purpose: verified.purpose,
-          utr: verified.payment_id,
-          created_at: new Date().toISOString(),
-          payment_status: "verified"
-        });
-        document.getElementById("donationForm").reset();
-        renderUpiQr();
-        message.textContent = "✅ Payment successful and verified.";
-        await loadVerifiedDonationHistory();
-      },
-      modal: {
-        ondismiss: function() {
-          message.textContent = "Payment cancelled. No donation was recorded as successful.";
-        }
-      }
-    };
-
-    const checkout = new Razorpay(options);
-    checkout.on("payment.failed", function(response) {
-      message.textContent = "❌ Payment failed or was cancelled. No successful donation was recorded.";
-    });
-    checkout.open();
-  } catch (err) {
-    console.error(err);
-    message.textContent = "❌ Secure payment could not be started. Please try again.";
-  } finally {
-    button.disabled = false;
-    button.textContent = "📱 Pay Directly with UPI";
-  }
+  message.textContent = "Opening your UPI app...";
+  window.location.href = buildUpiLink();
 });
 
 function createReceiptNumber() {
