@@ -1,1 +1,1 @@
-FINAL WEBSITE\nPhone/WhatsApp: 8555096523\nUPI: 8555096523@ptsbi\nLocation: 8CCV+MH8, Vanjiri, Telangana 504296\nUses only the two uploaded photos, cropped to remove the photographer strip.\nOpen index.html in Chrome.
+FINAL WEBSITE\nPhone/WhatsApp: 8555096524\nUPI: 8555096523@ptsbi\nLocation: 8CCV+MH8, Vanjiri, Telangana 504296\nUses only the two uploaded photos, cropped to remove the photographer strip.\nOpen index.html in Chrome.
