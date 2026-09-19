@@ -575,19 +575,10 @@
           <option value="General Donation">General Donation</option>
         </select>
 
-        <div class="website-upi-qr" style="text-align:center;margin:18px 0;">
-  <h4>📱 Scan & Pay with UPI</h4>
-  <img src="assets/donation-qr.svg" alt="UPI payment QR code" style="width:240px;max-width:100%;height:auto;background:#fff;padding:10px;border-radius:12px;">
-  <p>Scan with any UPI app to pay.</p>
-</div>
-<div class="upi-pay-box"><p id="qrAmountText">Enter an amount to generate the payment QR.</p>
-    <small>Scan this QR with any supported UPI app. The QR uses the donation amount entered above.</small>
-  </div>
+        <div class="website-upi-qr clean-upi-section">
+  <h4>📱 Scan &amp; Pay with UPI</h4>
+  <img src="assets/donation-qr.svg" alt="Scan to pay with UPI">
   <button type="button" id="payUpiButton" class="btn btn-primary upi-direct-button">📱 Pay with UPI App</button>
-  <button type="button" class="btn btn-outline upi-copy-main" onclick="copyUPI()">📋 Copy UPI ID</button>
-  <p id="upiPayMessage" class="upi-pay-message">
-    Enter your amount, then scan the QR or use the UPI app button. After payment, enter the UTR / Transaction ID below.
-  </p>
 </div>
 
         <label for="utr">UTR / Transaction ID *</label>
