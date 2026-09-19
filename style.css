@@ -760,3 +760,46 @@ body.home-page .schedule-section{
   .home-explore-grid{grid-template-columns:1fr}
   .home-explore-card{min-height:115px}
 }
+
+
+/* ================= PROFESSIONAL DONATION PAGE ================= */
+.donation-page{background:#fffaf3;color:var(--ink)}
+.donate-hero{padding:75px 0 85px;background:linear-gradient(135deg,#fff7e8,#f4eadb)}
+.donate-hero-grid{display:grid;grid-template-columns:1.05fr .8fr;gap:65px;align-items:center}
+.donate-back{display:inline-block;color:var(--green);font-size:12px;font-weight:900;margin-bottom:28px}
+.donate-hero h1{font-family:"Playfair Display",Georgia,serif;font-size:clamp(44px,5.5vw,70px);line-height:1.02;max-width:700px;margin:12px 0 20px}
+.donate-hero>div>div>p,.donate-hero-grid>div>p{color:var(--muted);font-size:15px;line-height:1.7;max-width:620px}
+.donate-trust-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:25px}
+.donate-trust-row span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:9px 13px;font-size:10px;font-weight:900;color:var(--green)}
+.donate-hero-image{position:relative}
+.donate-hero-image img{width:100%;height:440px;object-fit:cover;border-radius:28px;display:block;box-shadow:0 20px 45px rgba(23,68,63,.12)}
+.donate-hero-image div{position:absolute;left:20px;right:20px;bottom:20px;background:rgba(12,41,38,.9);color:#fff;padding:16px 18px;border-radius:15px}
+.donate-hero-image strong,.donate-hero-image small{display:block}
+.donate-hero-image strong{font-family:"Playfair Display",Georgia,serif;font-size:20px}.donate-hero-image small{color:#d4dfdb;margin-top:3px}
+.donation-portal{padding:90px 0;background:#fff}
+.donation-portal-grid{display:grid;grid-template-columns:1.15fr .78fr;gap:55px;align-items:start}
+.donate-section-heading span{color:var(--saffron);font-size:10px;font-weight:900;letter-spacing:1.8px}
+.donate-section-heading h2{font-family:"Playfair Display",Georgia,serif;font-size:35px;margin:8px 0 24px}
+.donate-section-heading.center{text-align:center}.donate-section-heading.center h2{margin-bottom:35px}
+.purpose-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.purpose-card{position:relative;text-align:left;border:1px solid var(--line);background:#fff;border-radius:18px;padding:20px;cursor:pointer;transition:.22s;min-height:145px;color:var(--ink)}
+.purpose-card:hover,.purpose-card.selected{border-color:#e0ad4c;box-shadow:0 10px 25px rgba(23,68,63,.08);transform:translateY(-3px)}
+.purpose-card.selected:after{content:"✓";position:absolute;right:15px;top:13px;background:var(--green);color:#fff;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:12px}
+.purpose-card span{display:block;font-size:27px;margin-bottom:10px}.purpose-card strong,.purpose-card small{display:block}.purpose-card strong{font-family:"Playfair Display",Georgia,serif;font-size:18px}.purpose-card small{color:var(--muted);font-size:10px;line-height:1.5;margin-top:5px}
+.amount-heading{margin-top:45px}
+.amount-buttons{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.amount-buttons button{border:1px solid #d8cbb8;background:#fff;padding:14px 8px;border-radius:12px;font-weight:900;color:var(--green);cursor:pointer}
+.amount-buttons button:hover,.amount-buttons button.selected{background:var(--green);color:#fff;border-color:var(--green)}
+.donation-portal-card{position:sticky;top:25px;padding:30px;box-shadow:0 18px 40px rgba(23,68,63,.12)}
+.donate-upi-label{color:#aebfba;font-size:9px;font-weight:900;letter-spacing:1.4px;margin-bottom:5px}
+.donate-upi-copy{width:100%;border:0;background:transparent;color:#fff;text-align:left;cursor:pointer;padding:0 0 12px}.donate-upi-copy strong{display:block;color:var(--gold);font-size:15px}.donate-upi-copy span{display:block;color:#aebfba;font-size:9px;margin-top:3px}
+.donate-how{padding:80px 0;background:#f7efe2}
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+.how-grid>div{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px}
+.how-grid span{display:block;color:var(--saffron);font-family:"Playfair Display",Georgia,serif;font-size:24px}
+.how-grid strong{display:block;font-family:"Playfair Display",Georgia,serif;font-size:18px;margin:12px 0 6px}.how-grid p{color:var(--muted);font-size:11px;line-height:1.6}
+.donate-note{padding:45px 0;background:#fff}
+.donate-note-box{display:flex;gap:16px;align-items:flex-start;max-width:900px;margin:auto;background:#fff8e8;border:1px solid #ead8ae;border-radius:18px;padding:22px}
+.donate-note-box>span{font-size:24px}.donate-note-box strong{font-family:"Playfair Display",Georgia,serif;font-size:18px}.donate-note-box p{color:var(--muted);font-size:11px;line-height:1.6;margin-top:4px}
+@media(max-width:950px){.donate-hero-grid,.donation-portal-grid{grid-template-columns:1fr}.donation-portal-card{position:static}.how-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.donate-hero{padding:50px 0 65px}.donate-hero h1{font-size:43px}.donate-hero-image img{height:350px}.purpose-grid{grid-template-columns:1fr}.amount-buttons{grid-template-columns:1fr 1fr}.how-grid{grid-template-columns:1fr}.donation-portal{padding:65px 0}.donation-portal-card{padding:22px 18px}}
