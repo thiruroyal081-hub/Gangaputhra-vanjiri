@@ -530,25 +530,9 @@
         మీ చిన్న సహాయం కూడా మన దేవాలయ అభివృద్ధికి ఎంతో ఉపయోగపడుతుంది.
       </p>
 
-      <div class="upi-box">
-        <span>UPI ID</span>
-        <button type="button" class="upi-id-copy" onclick="copyUPI()" aria-label="Copy UPI ID">
-          <strong id="upiId">8555096523@ptsbi</strong>
-          <span>📋 Tap to copy UPI ID</span>
-        </button>
-      </div>
+      
 
-      <p id="copyMessage" class="copy-message"></p>
-
-      <div class="donation-help">
-        <strong>How it works</strong>
-        <ol>
-          <li>Enter your name and donation amount.</li>
-          <li>Pay using the UPI button below.</li>
-          <li>Enter the UTR/transaction ID after payment.</li>
-          <li>Submit the details to generate your digital receipt.</li>
-        </ol>
-      </div>
+      
     </div>
 
     <div class="donation-card donation-form-card">
@@ -575,23 +559,9 @@
           <option value="General Donation">General Donation</option>
         </select>
 
-        <div class="upi-pay-box">
-  <button type="button" id="payUpiButton" class="btn btn-primary upi-direct-button">📱 Pay with UPI App</button>
-  <button type="button" class="btn btn-outline upi-copy-main" onclick="copyUPI()">📋 Copy UPI ID</button>
-  <p id="upiPayMessage" class="upi-pay-message">
-    Enter your amount, then use the button to open your UPI app. After payment, enter the UTR / Transaction ID below.
-  </p>
-</div>
+        
 
-        <label for="utr">UTR / Transaction ID *</label>
-        <input id="utr" name="utr" type="text" required maxlength="100" placeholder="Enter UTR after payment">
-
-        <button type="submit" id="submitDonation" class="btn donation-submit">🧾 Generate Digital Receipt</button>
-
-        <p class="payment-note">
-          Payment status is recorded as submitted/pending until the committee verifies the UTR.
-        </p>
-        <p id="donationMessage" class="donation-message" role="status"></p>
+        
       </form>
     </div>
 
@@ -670,10 +640,10 @@
         <h3>Phone</h3>
 
         <p>
-          8555096524
+          8555096523
         </p>
 
-        <a href="tel:+918555096524">
+        <a href="tel:+918555096523">
           Call Now →
         </a>
 
@@ -691,7 +661,7 @@
         </p>
 
         <a
-          href="https://wa.me/918555096524"
+          href="https://wa.me/918555096523"
           target="_blank"
         >
           WhatsApp →
@@ -792,11 +762,11 @@
 
       <h4>Contact</h4>
 
-      <a href="tel:+918555096524">
-        8555096524
+      <a href="tel:+918555096523">
+        8555096523
       </a>
 
-      <a href="https://wa.me/918555096524"
+      <a href="https://wa.me/918555096523"
          target="_blank">
         WhatsApp
       </a>
@@ -821,7 +791,7 @@
 <!-- ================= WHATSAPP FLOATING BUTTON ================= -->
 <a
   class="whatsapp-float"
-  href="https://wa.me/918555096524"
+  href="https://wa.me/918555096523"
   target="_blank"
   aria-label="Contact on WhatsApp"
 >
@@ -854,21 +824,6 @@ document.querySelectorAll("#mainNav a").forEach(function(link) {
   });
 });
 
-function copyUPI() {
-  const upi = "8555096523@ptsbi";
-  const msg = document.getElementById("copyMessage");
-  if (navigator.clipboard && window.isSecureContext) {
-    navigator.clipboard.writeText(upi).then(function() {
-      msg.textContent = "✅ UPI ID copied successfully!";
-    }).catch(function() {
-      msg.textContent = "Please copy the UPI ID manually: " + upi;
-    });
-  } else {
-    msg.textContent = "Please copy the UPI ID manually: " + upi;
-  }
-  setTimeout(function() { msg.textContent = ""; }, 3500);
-}
-
 document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
   anchor.addEventListener("click", function(e) {
     const target = document.querySelector(this.getAttribute("href"));
@@ -889,22 +844,6 @@ function buildUpiLink() {
   if (amount > 0) params.set("am", amount.toFixed(2));
   return "upi://pay?" + params.toString();
 }
-
-document.getElementById("payUpiButton").addEventListener("click", function() {
-  const amount = Number(document.getElementById("amount").value);
-  const donorName = document.getElementById("donorName").value.trim();
-  const message = document.getElementById("upiPayMessage");
-
-  if (!donorName || !amount || amount <= 0) {
-    message.textContent = "Please enter your name and donation amount first.";
-    if (!donorName) document.getElementById("donorName").focus();
-    else document.getElementById("amount").focus();
-    return;
-  }
-
-  message.textContent = "Opening your UPI app...";
-  window.location.href = buildUpiLink();
-});
 
 function createReceiptNumber() {
   return "GP-" + new Date().getFullYear() + "-" + String(Date.now()).slice(-8);
