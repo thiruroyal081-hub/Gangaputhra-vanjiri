@@ -579,6 +579,7 @@
   <h4>📱 Scan &amp; Pay with UPI</h4>
   <img src="assets/donation-qr.svg" alt="Scan to pay with UPI">
   <button type="button" id="payUpiButton" class="btn btn-primary upi-direct-button">📱 Pay with UPI App</button>
+  <p id="upiPayMessage" class="payment-note" role="status"></p>
 </div>
 
         <label for="utr">UTR / Transaction ID *</label>
@@ -884,7 +885,9 @@ document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
   });
   if (amount > 0) params.set("am", amount.toFixed(2));
   return "upi://pay?" + params.toString();
-}document.getElementById("payUpiButton").addEventListener("click", function() {
+}
+
+document.getElementById("payUpiButton").addEventListener("click", function() {
   const amount = Number(document.getElementById("amount").value);
   const donorName = document.getElementById("donorName").value.trim();
   const message = document.getElementById("upiPayMessage");
@@ -893,6 +896,13 @@ document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
     message.textContent = "Please enter your name and donation amount first.";
     if (!donorName) document.getElementById("donorName").focus();
     else document.getElementById("amount").focus();
+    return;
+  }
+
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  if (!isMobile) {
+    message.textContent = "📱 Please open this website on your phone, then tap Pay with UPI App. You can also scan the QR code.";
     return;
   }
 
@@ -1011,7 +1021,7 @@ async function updateDonationStatus(id,status) {
   }
 
   await loadAdminDonations();
-  awaitloadVerifiedDonationHistory();
+  await loadVerifiedDonationHistory();
 }
 
 window.verifyDonation = function(id) {
