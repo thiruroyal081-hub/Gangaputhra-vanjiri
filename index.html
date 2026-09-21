@@ -1108,7 +1108,8 @@ document.getElementById("donationForm").addEventListener("submit",async function
   }
 
   const receiptNumber=createReceiptNumber();
-  const result=await supabaseClient.from("donations").insert({
+  const submittedAt=new Date().toISOString();
+  const donationData={
     receipt_number:receiptNumber,
     donor_name:donorName,
     mobile:mobile||null,
@@ -1116,7 +1117,12 @@ document.getElementById("donationForm").addEventListener("submit",async function
     purpose:purpose,
     utr:utr,
     payment_status:"pending"
-  }).select("receipt_number, donor_name, amount, purpose, utr, payment_status, created_at").single();
+  };
+
+  // Do not use .select() after INSERT. The public RLS policy only
+  // allows visitors to read verified rows, so returning a pending
+  // row would make an otherwise valid INSERT fail.
+  const result=await supabaseClient.from("donations").insert(donationData);
 
   if(result.error){
     console.error("Donation insert:",result.error);
@@ -1126,7 +1132,15 @@ document.getElementById("donationForm").addEventListener("submit",async function
     return;
   }
 
-  showReceipt(result.data);
+  showReceipt({
+    receipt_number:receiptNumber,
+    donor_name:donorName,
+    amount:amount,
+    purpose:purpose,
+    utr:utr,
+    payment_status:"pending",
+    created_at:submittedAt
+  });
   this.reset();
   message.textContent="✅ Donation details saved successfully.";
   submit.disabled=false;
