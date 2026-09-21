@@ -577,7 +577,8 @@
 
         <div class="website-upi-qr clean-upi-section">
   <h4>📱 Scan &amp; Pay with UPI</h4>
-  <img src="assets/donation-qr.svg" alt="Scan to pay with UPI">
+  <div id="upiQrCode" aria-label="Dynamic UPI QR code"></div>
+  <p class="payment-note">Enter the donation amount above. The QR code will update with that amount.</p>
   <button type="button" id="payUpiButton" class="btn btn-primary upi-direct-button">📱 Pay with UPI App</button>
   <p id="upiPayMessage" class="payment-note" role="status"></p>
 </div>
@@ -829,6 +830,7 @@
 
 
 <!-- ================= JAVASCRIPT ================= -->
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL = "https://veuqbplcoluipkomhxhy.supabase.co";
@@ -876,7 +878,29 @@ document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
       target.scrollIntoView({behavior:"smooth"});
     }
   });
-});function buildUpiLink() {
+});let upiQr;
+
+function renderUpiQr() {
+  const qrContainer = document.getElementById("upiQrCode");
+  const amount = Number(document.getElementById("amount").value);
+  if (!qrContainer) return;
+
+  qrContainer.innerHTML = "";
+  if (!amount || amount <= 0) {
+    qrContainer.innerHTML = '<div class="payment-note">Enter an amount to generate the QR.</div>';
+    return;
+  }
+
+  const upiUrl = buildUpiLink();
+  upiQr = new QRCode(qrContainer, {
+    text: upiUrl,
+    width: 220,
+    height: 220,
+    correctLevel: QRCode.CorrectLevel.M
+  });
+}
+
+function buildUpiLink() {
   const amount = Number(document.getElementById("amount").value);
   const params = new URLSearchParams({
     pa: "8555096523@ptsbi",
@@ -886,6 +910,9 @@ document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
   if (amount > 0) params.set("am", amount.toFixed(2));
   return "upi://pay?" + params.toString();
 }
+
+document.getElementById("amount").addEventListener("input", renderUpiQr);
+renderUpiQr();
 
 document.getElementById("payUpiButton").addEventListener("click", function() {
   const amount = Number(document.getElementById("amount").value);
