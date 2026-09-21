@@ -531,10 +531,10 @@
       </p>
 
       <div class="upi-box">
-        <span>UPI ID</span>
-        <button type="button" class="upi-id-copy" onclick="copyUPI()" aria-label="Copy UPI ID">
-          <strong id="upiId">8555096523@ptsbi</strong>
-          <span>📋 Tap to copy UPI ID</span>
+        <span>UPI PAYMENT NUMBER</span>
+        <button type="button" class="upi-id-copy" onclick="copyUPI()" aria-label="Copy UPI payment number">
+          <strong id="upiId">8555096523</strong>
+          <span>📋 Tap to copy payment number</span>
         </button>
       </div>
 
@@ -854,13 +854,13 @@ document.querySelectorAll("#mainNav a").forEach(function(link) {
 });
 
 function copyUPI() {
-  const upi = "8555096523@ptsbi";
+  const upi = "8555096523";
   const msg = document.getElementById("copyMessage");
   if (navigator.clipboard && window.isSecureContext) {
     navigator.clipboard.writeText(upi).then(function() {
       msg.textContent = "✅ UPI ID copied successfully!";
     }).catch(function() {
-      msg.textContent = "Please copy the UPI ID manually: " + upi;
+      msg.textContent = "Please copy the payment number manually: " + upi;
     });
   } else {
     msg.textContent = "Please copy the UPI ID manually: " + upi;
