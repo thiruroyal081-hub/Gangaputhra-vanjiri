@@ -609,8 +609,9 @@
     </div>
     <div id="adminLogin" class="admin-card">
       <h3>Administrator Login</h3>
-      <p>Enter the admin password to review pending donations.</p>
-      <input id="adminPassword" type="password" placeholder="Admin password">
+      <p>Sign in with the authorized Supabase admin account to review pending donations.</p>
+      <input id="adminEmail" type="email" placeholder="Admin email" autocomplete="username">
+      <input id="adminPassword" type="password" placeholder="Admin password" autocomplete="current-password">
       <button type="button" class="btn btn-primary" id="adminLoginButton">🔐 Login</button>
       <div id="adminLoginMessage" class="admin-message"></div>
     </div>
@@ -836,7 +837,6 @@
 const SUPABASE_URL = "https://veuqbplcoluipkomhxhy.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_OmVrbiyJYFU1E5jRfSv3MQ_kp48VCYP";
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
-const ADMIN_PASSWORD = "Vanjiri2026";
 let adminLoggedIn = false;
 
 function escapeHtml(value) {
@@ -1063,27 +1063,71 @@ window.rejectDonation = function(id) {
   }
 };
 
-document.getElementById("adminLoginButton").addEventListener("click",function() {
-  const password=document.getElementById("adminPassword").value;
-  const msg=document.getElementById("adminLoginMessage");
-  if(password!==ADMIN_PASSWORD){
-    msg.textContent="❌ Incorrect admin password.";
+async function showAdminPanel() {
+  adminLoggedIn = true;
+  document.getElementById("adminLogin").hidden = true;
+  document.getElementById("adminPanel").hidden = false;
+  document.getElementById("adminLoginMessage").textContent = "";
+  await loadAdminDonations();
+}
+
+async function restoreAdminSession() {
+  const sessionResult = await supabaseClient.auth.getSession();
+  if (sessionResult.data && sessionResult.data.session) {
+    await showAdminPanel();
+  }
+}
+
+document.getElementById("adminLoginButton").addEventListener("click", async function() {
+  const email = document.getElementById("adminEmail").value.trim();
+  const password = document.getElementById("adminPassword").value;
+  const msg = document.getElementById("adminLoginMessage");
+  const button = document.getElementById("adminLoginButton");
+
+  if (!email || !password) {
+    msg.textContent = "❌ Enter the admin email and password.";
     return;
   }
-  adminLoggedIn=true;
-  document.getElementById("adminLogin").hidden=true;
-  document.getElementById("adminPanel").hidden=false;
-  msg.textContent="";
-  loadAdminDonations();
+
+  button.disabled = true;
+  button.textContent = "Signing in...";
+
+  const result = await supabaseClient.auth.signInWithPassword({
+    email: email,
+    password: password
+  });
+
+  if (result.error) {
+    console.error("Admin login:", result.error);
+    msg.textContent = "❌ Login failed. Check the admin email and password.";
+    button.disabled = false;
+    button.textContent = "🔐 Login";
+    return;
+  }
+
+  button.disabled = false;
+  button.textContent = "🔐 Login";
+  await showAdminPanel();
 });
 
 document.getElementById("adminRefreshButton").addEventListener("click",loadAdminDonations);
-document.getElementById("adminLogoutButton").addEventListener("click",function(){
+
+document.getElementById("adminLogoutButton").addEventListener("click",async function(){
+  await supabaseClient.auth.signOut();
   adminLoggedIn=false;
   document.getElementById("adminPanel").hidden=true;
   document.getElementById("adminLogin").hidden=false;
   document.getElementById("adminPassword").value="";
+  document.getElementById("adminLoginMessage").textContent="";
 });
+
+supabaseClient.auth.onAuthStateChange(function(event, session) {
+  if (session && !adminLoggedIn) {
+    showAdminPanel();
+  }
+});
+
+restoreAdminSession();
 
 document.getElementById("donationForm").addEventListener("submit",async function(event){
   event.preventDefault();
@@ -1126,7 +1170,7 @@ document.getElementById("donationForm").addEventListener("submit",async function
 
   if(result.error){
     console.error("Donation insert:",result.error);
-    message.textContent="❌ Could not save the donation. Please try again.";
+    message.textContent="❌ Could not save the donation. Please check the details and try again.";
     submit.disabled=false;
     submit.textContent="🧾 Generate Digital Receipt";
     return;
