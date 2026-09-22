@@ -403,7 +403,7 @@ nav a:hover{background:var(--gold-soft);color:var(--green)}
   background:#25d366;color:#fff;display:grid;place-items:center;font-size:24px;z-index:1200;
   box-shadow:0 8px 25px rgba(0,0,0,.22);transition:.25s
 }
-.whatsapp-float:hover{transform:scale(1.08)}
+.whatsapp-float svg{width:30px;height:30px;display:block;color:#fff}.whatsapp-float:hover{transform:scale(1.08)}
 
 /* PRINT */
 @media print{
